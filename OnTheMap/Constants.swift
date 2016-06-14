@@ -10,6 +10,9 @@ extension Client {
     
     
     
-    
+    struct JSONResponseKeys {
+        static let Session = "session"
+        static let ID = "id"
+    }
     
 }

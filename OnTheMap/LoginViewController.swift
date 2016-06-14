@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        debugTextLabel.text = "ASDFSDF"
+        debugTextLabel.text = ""
     }
     
     @IBAction func loginPressed(sender: AnyObject) {

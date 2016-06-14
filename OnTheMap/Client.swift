@@ -43,6 +43,8 @@ class Client: NSObject {
         /* TASK: Get a session ID, then store it (appDelegate.sessionID) and get the user's id */
         
         /* 1. Set the parameters */
+        
+        
 
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
@@ -76,24 +78,34 @@ class Client: NSObject {
             /* 5. Parse the data */
             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
-            print(newData)
+//            print(newData)
             
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding)!)
+//            print(NSString(data: newData, encoding: NSUTF8StringEncoding)!)
             
-            let parsedResult = NSString(data: newData, encoding: NSUTF8StringEncoding)
+            let parsedResult: AnyObject!
             
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+            } catch {
+                print("Could not parse data")
+                return
+            }
+            print(parsedResult)
             
+            guard let session = parsedResult[Client.JSONResponseKeys.Session] as? [String:AnyObject] else {
+                print("Could not find keys '\(Client.JSONResponseKeys.Session)' in \(parsedResult)")
+                return
+            }
             
+            print(session)
+            
+            guard let sessionID = session[Client.JSONResponseKeys.ID] as? String else {
+                print("Could not find keys '\(Client.JSONResponseKeys.ID)' in \(session)")
+                return
+            }
+            
+            self.sessionID = sessionID
 
-            
-            /* 6. Use the data! */
-//            guard let sessionID = newData[Constants.TMDBResponseKeys.SessionID] as? String else {
-//                print("Could not find key '\(Constants.TMDBResponseKeys.SessionID)' in \(parsedResult)")
-//                return
-//            }
-            
-//            self.sessionID = sessionID
-//            self.getUserID(sessionID)
         }
         
         /* 7. Start the request */
