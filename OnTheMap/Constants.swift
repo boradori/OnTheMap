@@ -11,8 +11,14 @@ extension Client {
     
     
     struct JSONResponseKeys {
+        
+        static let StatusMessage = "status_message"
+        static let StatusCode = "status_code"
+        
         static let Session = "session"
         static let ID = "id"
+        
+        
     }
     
 }

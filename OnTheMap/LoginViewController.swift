@@ -33,10 +33,19 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-
         Client.sharedInstance().email = emailField.text
         Client.sharedInstance().password = passwordField.text
-        Client.sharedInstance().getSessionID()
+        Client.sharedInstance().authenticateWithViewController(self) { (success, errorString) in
+            performUIUpdatesOnMain {
+                if success {
+                    print("Yay")
+                    print(Client.sharedInstance().session)
+                } else {
+                    print(errorString)
+                }
+            }
+        }
+        
     }
     
     

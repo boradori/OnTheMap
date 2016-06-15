@@ -36,6 +36,41 @@ class Client: NSObject {
 //        task.resume()
 //    }
     
+    func taskForUdacityPostMethod(jsonBody: String, completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request")
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX!")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request.")
+                return
+            }
+            
+            /* 5. Parse the data */
+            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPost)
+            
+        }
+        task.resume()
+        return task
+    }
+    
     
     
     func getSessionID() {
@@ -112,6 +147,19 @@ class Client: NSObject {
         task.resume()
         
     }
+    
+    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+        
+        var parsedResult: AnyObject!
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+        } catch {
+            let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
+            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+        }
+        completionHandlerForConvertData(result: parsedResult, error: nil)
+    }
+    
     
     class func sharedInstance() -> Client {
         struct Singleton {
