@@ -18,7 +18,8 @@ extension Client {
         static let Session = "session"
         static let ID = "id"
         
-        
+        static let Account = "account"
+        static let Key = "key"
     }
     
 }
