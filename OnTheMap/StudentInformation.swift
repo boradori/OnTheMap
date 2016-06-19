@@ -6,7 +6,7 @@
 //  Copyright © 2016 Youngsun Paik. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct StudentInformation {
     

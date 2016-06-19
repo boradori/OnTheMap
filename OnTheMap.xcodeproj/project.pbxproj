@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C1D98191D14F8FF002B682A /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D98181D14F8FF002B682A /* StudentInformation.swift */; };
+		0C1D981B1D175F1B002B682A /* StudentInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */; };
 		0C46FA621D0959EB00BAEF9A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */; };
 		0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */; };
 		0C8AA00A1D06A6430058B2F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0091D06A6430058B2F3 /* LoginViewController.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		0C1D98181D14F8FF002B682A /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationModel.swift; sourceTree = "<group>"; };
 		0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		0C8AA0041D06A6430058B2F3 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				0C8AA01D1D07F3EF0058B2F3 /* Client.swift */,
 				0C8AA01F1D07F4020058B2F3 /* Constants.swift */,
 				0C1D98181D14F8FF002B682A /* StudentInformation.swift */,
+				0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */,
 				0C8AA0211D07F4380058B2F3 /* Convenience.swift */,
 			);
 			name = Model;
@@ -178,6 +181,7 @@
 				0C8AA01E1D07F3EF0058B2F3 /* Client.swift in Sources */,
 				0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */,
 				0C46FA621D0959EB00BAEF9A /* GCDBlackBox.swift in Sources */,
+				0C1D981B1D175F1B002B682A /* StudentInformationModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

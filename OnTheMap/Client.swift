@@ -38,9 +38,7 @@ class Client: NSObject {
     
     func taskForParseGetMethod(method: String, parameters: [String:AnyObject], completionHandlerForGet: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let params = parameters
-        
-        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: params, withPathExtension: method))
+        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))
         request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
