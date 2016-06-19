@@ -20,5 +20,17 @@ struct StudentInformation {
     var longitude: Double? = nil
     
 
+    init(dictionary: [String:AnyObject]) {
+        
+        objectId = dictionary[Client.JSONBodyKeys.objectId] as? String
+        uniqueKey = dictionary[Client.JSONBodyKeys.uniqueKey] as? String
+        firstName = dictionary[Client.JSONBodyKeys.firstName] as? String
+        lastName = dictionary[Client.JSONBodyKeys.lastName] as? String
+        mapString = dictionary[Client.JSONBodyKeys.mapString] as? String
+        mediaURL = dictionary[Client.JSONBodyKeys.mediaURL] as? String
+        latitude = dictionary[Client.JSONBodyKeys.latitude] as? Double
+        longitude = dictionary[Client.JSONBodyKeys.longitude] as? Double
+        
+    }
     
 }
