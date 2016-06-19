@@ -10,13 +10,15 @@ import Foundation
 
 struct StudentInformation {
     
-    var objectId: String!
-    var uniqueKey: String! // Udacity userID
-    var firstName: String!
-    var lastName: String!
-    var mapString: String!
-    var mediaURL: String!
-    var latitude: Double!
-    var longitude: Double!
+    var objectId: String? = nil
+    var uniqueKey: String? = nil // Udacity userID
+    var firstName: String? = nil
+    var lastName: String? = nil
+    var mapString: String? = nil
+    var mediaURL: String? = nil
+    var latitude: Double? = nil
+    var longitude: Double? = nil
+    
+
     
 }

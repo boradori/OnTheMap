@@ -36,6 +36,17 @@ extension Client {
         static let StudentLocation = "/StudentLocation"
     }
     
+    struct JSONBodyKeys {
+        static let objectId = "objectId"
+        static let uniqueKey = "uniqueKey"
+        static let firstName = "firstName"
+        static let lastName = "lastName"
+        static let mapString = "mapString"
+        static let mediaURL = "mediaURL"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
+    }
+    
     struct JSONResponseKeys {
         
         static let StatusMessage = "status_message"
