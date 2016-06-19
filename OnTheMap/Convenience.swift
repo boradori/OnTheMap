@@ -34,8 +34,6 @@ extension Client {
                         completionHandlerForAuth(success: success, errorString: errorString)
                     }
                 })
-                
-                completionHandlerForAuth(success: success, errorString: errorString)
             } else {
                 completionHandlerForAuth(success: success, errorString: errorString)
             }
