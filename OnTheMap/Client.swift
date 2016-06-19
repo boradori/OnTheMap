@@ -36,13 +36,44 @@ class Client: NSObject {
 //        task.resume()
 //    }
     
-    func taskForParseGetMethod() {
+    func taskForParseGetMethod(method: String, parameters: [String:AnyObject], completionHandlerForGet: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
+        let params = parameters
+        
+        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: params, withPathExtension: method))
+        request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            guard (error == nil) else {
+                print("There is an error with your request")
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX!")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request")
+                return
+            }
+            
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGet)
+            
+        }
+        
+        task.resume()
+        return task
     }
     
-    func taskForUdacityPostMethod(jsonBody: String, completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForUdacityPostMethod(jsonBody: String, parameters: [String:AnyObject], completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+//        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters))
+        
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -87,12 +118,17 @@ class Client: NSObject {
         completionHandlerForConvertData(result: parsedResult, error: nil)
     }
     
-    private func URLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+    private func URLFromParameters(apiSource: String, parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         
         let components = NSURLComponents()
         components.scheme = Client.Constants.ApiScheme
-        components.host = Client.Constants.ApiHost
-        components.path = Client.Constants.ApiPath + (withPathExtension ?? "")
+        if apiSource == "Udacity" {
+            components.host = Client.Constants.ApiHostUdacity
+            components.path = Client.Constants.ApiPathUdacity + (withPathExtension ?? "")
+        } else if apiSource == "Parse" {
+            components.host = Client.Constants.ApiHostParse
+            components.path = Client.Constants.ApiPathParse + (withPathExtension ?? "")
+        }
         components.queryItems = [NSURLQueryItem]()
         
         for (key, value) in parameters {

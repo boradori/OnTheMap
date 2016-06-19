@@ -17,6 +17,16 @@ extension Client {
             if success {
                 self.sessionID = sessionID
                 self.userID = userID
+                
+                self.getStudentLocations({ (success, result, errorString) in
+                    if success {
+                        print(result)
+                        completionHandlerForAuth(success: success, errorString: errorString)
+                    } else {
+                        completionHandlerForAuth(success: success, errorString: errorString)
+                    }
+                })
+                
                 completionHandlerForAuth(success: success, errorString: errorString)
             } else {
                 completionHandlerForAuth(success: success, errorString: errorString)
@@ -29,8 +39,9 @@ extension Client {
     func getSessionInfo(email: String, password: String, completionHandlerForSessionInfo: (success: Bool, sessionID: String!, userID: String!, errorString: NSError?) -> Void) {
         
         let jsonBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
+        let parameters = [String:AnyObject]()
         
-        taskForUdacityPostMethod(jsonBody) { (result, error) in
+        taskForUdacityPostMethod(jsonBody, parameters: parameters) { (result, error) in
             if let error = error {
                 completionHandlerForSessionInfo(success: false, sessionID: nil, userID
                     : nil, errorString: error)
@@ -58,6 +69,24 @@ extension Client {
                 
 
                 completionHandlerForSessionInfo(success: true, sessionID: sessionID, userID: userID, errorString: nil)
+            }
+        }
+    }
+    
+    func getStudentLocations(completionHandlerForStudentLocations: (success: Bool, result: [String:AnyObject]!, errorString: NSError?) -> Void) {
+        
+        let method = Methods.StudentLocation
+        let parameters = [String:AnyObject]()
+        
+        taskForParseGetMethod(method, parameters: parameters) { (result, error) in
+            if let error = error {
+                completionHandlerForStudentLocations(success: false, result: nil, errorString: error)
+            } else {
+                if let result = result as? [String:AnyObject] {
+                    completionHandlerForStudentLocations(success: true, result: result, errorString: nil)
+                } else {
+                    completionHandlerForStudentLocations(success: false, result: nil, errorString: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                }
             }
         }
     }

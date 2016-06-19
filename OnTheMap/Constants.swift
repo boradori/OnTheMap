@@ -14,9 +14,26 @@ extension Client {
         static let ApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
         static let ApiScheme = "https"
-        static let ApiHost = "api.parse.com"
-        static let ApiPath = "/1/classes"
         
+        static let ApiHostUdacity = "www.udacity.com"
+        static let ApiPathUdacity = "/api/session"
+        
+        static let ApiHostParse = "api.parse.com"
+        static let ApiPathParse = "/1/classes"
+        
+    }
+    
+    // MARK: Parameter Keys
+    struct ParameterKeys {
+        static let Limit = "limit"
+        static let Skip = "skip"
+        static let Order = "order"
+        
+    }
+    
+    // MARK: Methods
+    struct Methods {
+        static let StudentLocation = "/StudentLocation"
     }
     
     struct JSONResponseKeys {
