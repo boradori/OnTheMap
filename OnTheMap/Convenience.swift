@@ -18,9 +18,17 @@ extension Client {
                 self.sessionID = sessionID
                 self.userID = userID
                 
-                self.getStudentLocations({ (success, result, errorString) in
+                self.getStudentLocations({ (success, results, errorString) in
                     if success {
-                        print(result)
+                        
+                        StudentInformationModel.sharedInstance().studentInformationArray.removeAll()
+                        
+                        for studentLocation in results {
+                            let studentLocation = StudentInformation(dictionary: studentLocation)
+                            
+                            StudentInformationModel.sharedInstance().studentInformationArray.append(studentLocation)
+                        }
+                        
                         completionHandlerForAuth(success: success, errorString: errorString)
                     } else {
                         completionHandlerForAuth(success: success, errorString: errorString)
@@ -73,20 +81,20 @@ extension Client {
         }
     }
     
-    func getStudentLocations(completionHandlerForStudentLocations: (success: Bool, result: [String:AnyObject]!, errorString: NSError?) -> Void) {
+    func getStudentLocations(completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, errorString: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
         let parameters = [String:AnyObject]()
         
         taskForParseGetMethod(method, parameters: parameters) { (result, error) in
             if let error = error {
-                completionHandlerForStudentLocations(success: false, result: nil, errorString: error)
+                completionHandlerForStudentLocations(success: false, results: nil, errorString: error)
             } else {
-                if let result = result as? [String:AnyObject] {
-                    completionHandlerForStudentLocations(success: true, result: result, errorString: nil)
-                } else {
-                    completionHandlerForStudentLocations(success: false, result: nil, errorString: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                guard let results = result[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
+                    completionHandlerForStudentLocations(success: false, results: nil, errorString: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                    return
                 }
+                completionHandlerForStudentLocations(success: true, results: results, errorString: nil)
             }
         }
     }

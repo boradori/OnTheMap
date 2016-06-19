@@ -57,6 +57,8 @@ extension Client {
         
         static let Account = "account"
         static let Key = "key"
+        
+        static let Results = "results"
     }
     
 }
