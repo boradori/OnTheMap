@@ -8,7 +8,16 @@
 
 extension Client {
     
-    
+    struct Constants {
+        
+        static let ParseAppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let ApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        
+        static let ApiScheme = "https"
+        static let ApiHost = "api.parse.com"
+        static let ApiPath = "/1/classes"
+        
+    }
     
     struct JSONResponseKeys {
         

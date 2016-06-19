@@ -16,7 +16,7 @@ extension Client {
         getSessionInfo(email!, password: password!) { success, sessionID, userID, errorString in
             if success {
                 self.sessionID = sessionID
-                self.userID = Int(userID)
+                self.userID = userID
                 completionHandlerForAuth(success: success, errorString: errorString)
             } else {
                 completionHandlerForAuth(success: success, errorString: errorString)

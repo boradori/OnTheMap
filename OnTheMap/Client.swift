@@ -20,7 +20,7 @@ class Client: NSObject {
     
     // authenticate state
     var sessionID: String? = nil
-    var userID: Int? = nil
+    var userID: String? = nil
     
     
 //    private func userData() {
@@ -35,6 +35,10 @@ class Client: NSObject {
 //        }
 //        task.resume()
 //    }
+    
+    func taskForParseGetMethod() {
+        
+    }
     
     func taskForUdacityPostMethod(jsonBody: String, completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
@@ -81,6 +85,21 @@ class Client: NSObject {
             completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
         }
         completionHandlerForConvertData(result: parsedResult, error: nil)
+    }
+    
+    private func URLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+        
+        let components = NSURLComponents()
+        components.scheme = Client.Constants.ApiScheme
+        components.host = Client.Constants.ApiHost
+        components.path = Client.Constants.ApiPath + (withPathExtension ?? "")
+        components.queryItems = [NSURLQueryItem]()
+        
+        for (key, value) in parameters {
+            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+            components.queryItems!.append(queryItem)
+        }
+        return components.URL!
     }
     
     
