@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
                 print("Yay")
                 print(Client.sharedInstance().sessionID)
                 print(Client.sharedInstance().userID)
+                self.completeLogin()                
             } else {
                 print(errorString)
             }
@@ -49,6 +50,11 @@ class LoginViewController: UIViewController {
     }
     
     
+    private func completeLogin() {
+        debugTextLabel.text = ""
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
+        presentViewController(controller, animated: true, completion: nil)
+    }
     
 }
 
