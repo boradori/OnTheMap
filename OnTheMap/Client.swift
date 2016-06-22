@@ -22,20 +22,6 @@ class Client: NSObject {
     var sessionID: String? = nil
     var userID: String? = nil
     
-    
-//    private func userData() {
-//        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/3903878747")!)
-//        let session = NSURLSession.sharedSession()
-//        let task = session.dataTaskWithRequest(request) { data, response, error in
-//            if error != nil { // Handle error...
-//                return
-//            }
-//            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-//            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-//        }
-//        task.resume()
-//    }
-    
     func taskForParseGetMethod(method: String, parameters: [String:AnyObject], completionHandlerForGet: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))

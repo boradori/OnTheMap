@@ -129,7 +129,7 @@
         <!--List-->
         <scene sceneID="U2I-cE-id6">
             <objects>
-                <viewController id="erz-Wy-pYX" sceneMemberID="viewController">
+                <viewController id="erz-Wy-pYX" customClass="ListViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8wA-lN-rpx"/>
                         <viewControllerLayoutGuide type="bottom" id="LXR-sJ-qxH"/>
@@ -137,9 +137,49 @@
                     <view key="view" contentMode="scaleToFill" id="TxU-qF-0gr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nnH-Gn-nqe">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="studentInfoTableCell" id="Lhw-Gr-hGI" customClass="StudentInfoTableCell" customModule="OnTheMap" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lhw-Gr-hGI" id="6a5-wd-syg">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="StudentName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QP2-Rz-snm">
+                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="studentName" destination="QP2-Rz-snm" id="iDx-mb-fxb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="erz-Wy-pYX" id="zld-fR-H15"/>
+                                    <outlet property="delegate" destination="erz-Wy-pYX" id="nwh-ew-TQA"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nnH-Gn-nqe" firstAttribute="leading" secondItem="TxU-qF-0gr" secondAttribute="leadingMargin" constant="-20" id="HRh-AD-uWd"/>
+                            <constraint firstItem="nnH-Gn-nqe" firstAttribute="top" secondItem="8wA-lN-rpx" secondAttribute="bottom" id="P8d-lW-GnN"/>
+                            <constraint firstItem="LXR-sJ-qxH" firstAttribute="top" secondItem="nnH-Gn-nqe" secondAttribute="bottom" id="YiY-qw-Wec"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nnH-Gn-nqe" secondAttribute="trailing" constant="-20" id="ug3-mr-4zx"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" id="Ep6-SF-9V2"/>
+                    <connections>
+                        <outlet property="tableView" destination="nnH-Gn-nqe" id="22G-Lu-f0b"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uhd-l2-IiA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

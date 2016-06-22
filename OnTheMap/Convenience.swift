@@ -11,65 +11,49 @@ import Foundation
 
 extension Client {
     
-    func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: NSError?) -> Void) {
+    func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
         
         getSessionInfo(email!, password: password!) { success, sessionID, userID, errorString in
             if success {
                 self.sessionID = sessionID
                 self.userID = userID
-                
-                self.getStudentLocations({ (success, results, errorString) in
-                    if success {
-                        
-                        StudentInformationModel.sharedInstance().studentInformationArray.removeAll()
-                        
-                        for studentLocation in results {
-                            let studentLocation = StudentInformation(dictionary: studentLocation)
-                            
-                            StudentInformationModel.sharedInstance().studentInformationArray.append(studentLocation)
-                        }
-                        
-                        completionHandlerForAuth(success: success, errorString: errorString)
-                    } else {
-                        completionHandlerForAuth(success: success, errorString: errorString)
-                    }
-                })
+                completionHandlerForAuth(success: success, errorString: errorString)
             } else {
                 completionHandlerForAuth(success: success, errorString: errorString)
             }
         }
-        
     }
+
     
-    
-    func getSessionInfo(email: String, password: String, completionHandlerForSessionInfo: (success: Bool, sessionID: String!, userID: String!, errorString: NSError?) -> Void) {
+    func getSessionInfo(email: String, password: String, completionHandlerForSessionInfo: (success: Bool, sessionID: String!, userID: String!, errorString: String?) -> Void) {
         
         let jsonBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
         let parameters = [String:AnyObject]()
         
         taskForUdacityPostMethod(jsonBody, parameters: parameters) { (result, error) in
             if let error = error {
+                print(error)
                 completionHandlerForSessionInfo(success: false, sessionID: nil, userID
-                    : nil, errorString: error)
+                    : nil, errorString: "Login failed (session)")
             } else {
                 guard let session = result[Client.JSONResponseKeys.Session] as? [String:AnyObject] else {
                     completionHandlerForSessionInfo(success: false, sessionID: nil, userID
-                        : nil, errorString: NSError(domain: "getSession session", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse session information"]))
+                        : nil, errorString: "Login failed (session)")
                     return
                 }
                 
                 guard let sessionID = session[Client.JSONResponseKeys.ID] as? String else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: NSError(domain: "getSession sessionID", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse sessionID"]))
+                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: "Login failed (sessionID)")
                     return
                 }
                 
                 guard let account = result[Client.JSONResponseKeys.Account] as? [String:AnyObject] else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: NSError(domain: "getSession account", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse account information"]))
+                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: "Login failed (account)")
                     return
                 }
                 
                 guard let userID = account[Client.JSONResponseKeys.Key] as? String else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: NSError(domain: "getSession userID", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse userID"]))
+                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: "Login failed (userID)")
                     return
                 }
                 
@@ -79,10 +63,11 @@ extension Client {
         }
     }
     
-    func getStudentLocations(completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, errorString: NSError?) -> Void) {
+    func getStudentLocations(limit: String, skip: String, completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, errorString: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
-        let parameters = [String:AnyObject]()
+        let parameters = [Client.ParameterKeys.Limit: limit, Client.ParameterKeys.Skip: skip, Client.ParameterKeys.Order: "-updatedAt"]
+        print(parameters)
         
         taskForParseGetMethod(method, parameters: parameters) { (result, error) in
             if let error = error {

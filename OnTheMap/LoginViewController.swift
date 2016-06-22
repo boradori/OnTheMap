@@ -36,15 +36,16 @@ class LoginViewController: UIViewController {
         Client.sharedInstance().email = emailField.text
         Client.sharedInstance().password = passwordField.text
         Client.sharedInstance().authenticateWithViewController(self) { (success, errorString) in
-            if success {
-                print("Yay")
-                print(Client.sharedInstance().sessionID)
-                print(Client.sharedInstance().userID)
-                self.completeLogin()                
-            } else {
-                print(errorString)
+            performUIUpdatesOnMain {
+                if success {
+                    print("Yay")
+                    print(Client.sharedInstance().sessionID)
+                    print(Client.sharedInstance().userID)
+                    self.completeLogin()
+                } else {
+                    self.displayError(errorString)
+                }
             }
-            
         }
         
     }
