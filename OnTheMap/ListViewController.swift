@@ -46,7 +46,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCellWithIdentifier("studentInfoTableCell") as! StudentInfoTableCell
         let studentInfoCell = StudentInformationModel.sharedInstance().studentInformationArray[indexPath.row]
         
-        cell.studentName.text = studentInfoCell.firstName
+        cell.studentName.text = "\(studentInfoCell.firstName!) \(studentInfoCell.lastName!)"
         
         return cell
         
