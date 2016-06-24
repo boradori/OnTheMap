@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C19DA051D1A890400903381 /* StudentInfoTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C19DA041D1A890400903381 /* StudentInfoTableCell.swift */; };
+		0C19DA071D1D3B3700903381 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C19DA061D1D3B3700903381 /* MapViewController.swift */; };
 		0C1D98191D14F8FF002B682A /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D98181D14F8FF002B682A /* StudentInformation.swift */; };
 		0C1D981B1D175F1B002B682A /* StudentInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */; };
 		0C1D981D1D1A835F002B682A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981C1D1A835F002B682A /* ListViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		0C19DA041D1A890400903381 /* StudentInfoTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInfoTableCell.swift; sourceTree = "<group>"; };
+		0C19DA061D1D3B3700903381 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		0C1D98181D14F8FF002B682A /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationModel.swift; sourceTree = "<group>"; };
 		0C1D981C1D1A835F002B682A /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			children = (
 				0C8AA0091D06A6430058B2F3 /* LoginViewController.swift */,
 				0C1D981C1D1A835F002B682A /* ListViewController.swift */,
+				0C19DA061D1D3B3700903381 /* MapViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				0C8AA00A1D06A6430058B2F3 /* LoginViewController.swift in Sources */,
 				0C8AA01B1D07F3130058B2F3 /* AuthViewController.swift in Sources */,
 				0C8AA01E1D07F3EF0058B2F3 /* Client.swift in Sources */,
+				0C19DA071D1D3B3700903381 /* MapViewController.swift in Sources */,
 				0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */,
 				0C46FA621D0959EB00BAEF9A /* GCDBlackBox.swift in Sources */,
 				0C1D981D1D1A835F002B682A /* ListViewController.swift in Sources */,
