@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import MapKit
 
 extension Client {
     
@@ -67,6 +68,7 @@ extension Client {
         
         let method = Methods.StudentLocation
         let parameters = [Client.ParameterKeys.Limit: limit, Client.ParameterKeys.Skip: skip, Client.ParameterKeys.Order: "-updatedAt"]
+        
         print(parameters)
         
         taskForParseGetMethod(method, parameters: parameters) { (result, error) in
@@ -80,6 +82,5 @@ extension Client {
                 completionHandlerForStudentLocations(success: true, results: results, errorString: nil)
             }
         }
-    }
-    
+    }    
 }

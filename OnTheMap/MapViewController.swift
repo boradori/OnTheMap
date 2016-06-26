@@ -28,7 +28,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func loadStudentInformation() {
         Client.sharedInstance().getStudentLocations("100", skip: "10") { (success, results, errorString) in
             if success {
-                
                 performUIUpdatesOnMain {
                     self.mapView.removeAnnotations(self.mapView.annotations)
                 }
@@ -57,7 +56,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     // Finally we place the annotation in an array of annotations.
                     annotations.append(annotation)
                 }
-                
                 performUIUpdatesOnMain {
                     self.mapView.addAnnotations(annotations)
                 }
