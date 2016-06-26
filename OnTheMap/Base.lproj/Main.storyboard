@@ -191,7 +191,7 @@
         <!--Map-->
         <scene sceneID="gNN-Ra-pnH">
             <objects>
-                <viewController id="jeV-uO-7FO" sceneMemberID="viewController">
+                <viewController id="jeV-uO-7FO" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aPD-aJ-sbo"/>
                         <viewControllerLayoutGuide type="bottom" id="eCG-z0-UB4"/>
@@ -199,9 +199,23 @@
                     <view key="view" contentMode="scaleToFill" id="84X-xS-VKK">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BOS-00-BuN">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eCG-z0-UB4" firstAttribute="top" secondItem="BOS-00-BuN" secondAttribute="bottom" id="BK5-5m-UiJ"/>
+                            <constraint firstItem="BOS-00-BuN" firstAttribute="top" secondItem="aPD-aJ-sbo" secondAttribute="bottom" constant="-64" id="Noa-NP-e4z"/>
+                            <constraint firstItem="BOS-00-BuN" firstAttribute="leading" secondItem="84X-xS-VKK" secondAttribute="leadingMargin" constant="-20" id="VFq-K4-f4c"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BOS-00-BuN" secondAttribute="trailing" constant="-20" id="dUg-GO-mIx"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="F11-fX-oo5"/>
+                    <connections>
+                        <outlet property="mapView" destination="BOS-00-BuN" id="s13-hm-1zd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ue-SV-sF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
