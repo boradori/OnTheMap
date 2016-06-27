@@ -22,18 +22,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        
         loadStudentInformation()
     }
     
     func loadStudentInformation() {
         Client.sharedInstance().getStudentLocations("100", skip: "10") { (success, results, errorString) in
             if success {
-                performUIUpdatesOnMain {
-                    self.mapView.removeAnnotations(self.mapView.annotations)
-                }
                 
                 // Create an MKPointAnnocation for each dictionary in studentLocation.
                 var annotations = [MKPointAnnotation]()
+                
+                // Remove elements in annotations array before loading annotations again
+                performUIUpdatesOnMain {
+                    self.mapView.removeAnnotations(self.mapView.annotations)
+                }
                 
                 for studentLocation in results {
                     //
