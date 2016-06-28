@@ -13,6 +13,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        mapView.delegate = self
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         loadStudentInformation()
@@ -67,7 +72,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinTintColor = UIColor.blueColor()
+            pinView!.pinTintColor = UIColor.redColor()
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         } else {
             pinView!.annotation = annotation
