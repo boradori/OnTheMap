@@ -61,7 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
                 
             }
-        }
+        }   
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {

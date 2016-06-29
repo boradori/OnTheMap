@@ -16,15 +16,12 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var debugTextLabel: UILabel!
     
-    
-    
     var session: NSURLSession!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        emailField.keyboardType = .EmailAddress
+        passwordField.secureTextEntry = true
     }
 
     override func viewDidAppear(animated: Bool) {
