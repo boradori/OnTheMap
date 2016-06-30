@@ -30,30 +30,24 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-        Client.sharedInstance().email = emailField.text
-        Client.sharedInstance().password = passwordField.text
-        Client.sharedInstance().authenticateWithViewController(self) { (success, errorString) in
+        Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error) in
             performUIUpdatesOnMain {
                 if success {
-                    print("Yay")
-                    print(Client.sharedInstance().sessionID)
-                    print(Client.sharedInstance().userID)
+                    print(sessionID)
+                    print(userID)
                     self.completeLogin()
                 } else {
-                    self.displayError(errorString)
+                    self.displayError("Error: need to implement Reachability to display proper error message")
                 }
             }
         }
-        
     }
-    
     
     private func completeLogin() {
         debugTextLabel.text = ""
         let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
         presentViewController(controller, animated: true, completion: nil)
     }
-    
 }
 
 

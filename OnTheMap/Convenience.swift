@@ -12,21 +12,7 @@ import MapKit
 
 extension Client {
     
-    func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
-        
-        getSessionInfo(email!, password: password!) { success, sessionID, userID, errorString in
-            if success {
-                self.sessionID = sessionID
-                self.userID = userID
-                completionHandlerForAuth(success: success, errorString: errorString)
-            } else {
-                completionHandlerForAuth(success: success, errorString: errorString)
-            }
-        }
-    }
-
-    
-    func getSessionInfo(email: String, password: String, completionHandlerForSessionInfo: (success: Bool, sessionID: String!, userID: String!, errorString: String?) -> Void) {
+    func authenticateWithViewController(email: String, password: String, hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, sessionID: String!, userID: String!, error: NSError?) -> Void) {
         
         let jsonBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
         let parameters = [String:AnyObject]()
@@ -34,34 +20,32 @@ extension Client {
         taskForUdacityPostMethod(jsonBody, parameters: parameters) { (result, error) in
             if let error = error {
                 print(error)
-                completionHandlerForSessionInfo(success: false, sessionID: nil, userID
-                    : nil, errorString: "Login failed (session)")
+                completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
             } else {
                 guard let session = result[Client.JSONResponseKeys.Session] as? [String:AnyObject] else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID
-                        : nil, errorString: "Login failed (session)")
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
                     return
                 }
                 
                 guard let sessionID = session[Client.JSONResponseKeys.ID] as? String else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: "Login failed (sessionID)")
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
                     return
                 }
                 
                 guard let account = result[Client.JSONResponseKeys.Account] as? [String:AnyObject] else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: "Login failed (account)")
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
                     return
                 }
                 
                 guard let userID = account[Client.JSONResponseKeys.Key] as? String else {
-                    completionHandlerForSessionInfo(success: false, sessionID: nil, userID: nil, errorString: "Login failed (userID)")
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
                     return
                 }
                 
-
-                completionHandlerForSessionInfo(success: true, sessionID: sessionID, userID: userID, errorString: nil)
+                completionHandlerForAuth(success: true, sessionID: sessionID, userID: userID, error: nil)
             }
         }
+        
     }
     
     func getStudentLocations(limit: String, skip: String, completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, errorString: NSError?) -> Void) {
