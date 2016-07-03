@@ -32,6 +32,7 @@ class Client: NSObject {
             
             guard (error == nil) else {
                 print("There is an error with your request")
+//                print(error!.localizedDescription)
                 return
             }
             
@@ -66,6 +67,7 @@ class Client: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
                 print("There is an error with your request")
+//                print(error!.localizedDescription)
                 return
             }
             

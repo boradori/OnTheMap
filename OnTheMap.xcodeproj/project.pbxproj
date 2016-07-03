@@ -13,6 +13,7 @@
 		0C1D981B1D175F1B002B682A /* StudentInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */; };
 		0C1D981D1D1A835F002B682A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981C1D1A835F002B682A /* ListViewController.swift */; };
 		0C46FA621D0959EB00BAEF9A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */; };
+		0C4B79D01D291646003733F8 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4B79CF1D291646003733F8 /* Reachability.framework */; };
 		0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */; };
 		0C8AA00A1D06A6430058B2F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0091D06A6430058B2F3 /* LoginViewController.swift */; };
 		0C8AA00D1D06A6430058B2F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C8AA00B1D06A6430058B2F3 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 		0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationModel.swift; sourceTree = "<group>"; };
 		0C1D981C1D1A835F002B682A /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		0C4B79CF1D291646003733F8 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		0C8AA0041D06A6430058B2F3 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C8AA0091D06A6430058B2F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C4B79D01D291646003733F8 /* Reachability.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +61,7 @@
 		0C8A9FFB1D06A6430058B2F3 = {
 			isa = PBXGroup;
 			children = (
+				0C4B79CF1D291646003733F8 /* Reachability.framework */,
 				0C8AA0061D06A6430058B2F3 /* OnTheMap */,
 				0C8AA0051D06A6430058B2F3 /* Products */,
 			);
@@ -120,6 +124,7 @@
 				0C8AA0001D06A6430058B2F3 /* Sources */,
 				0C8AA0011D06A6430058B2F3 /* Frameworks */,
 				0C8AA0021D06A6430058B2F3 /* Resources */,
+				0C4B79D11D29171D003733F8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -176,6 +181,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0C4B79D11D29171D003733F8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0C8AA0001D06A6430058B2F3 /* Sources */ = {
@@ -306,6 +328,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Youngsun.OnTheMap;
@@ -317,6 +343,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Youngsun.OnTheMap;
