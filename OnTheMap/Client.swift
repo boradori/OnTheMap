@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class Client: NSObject {
     
-    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     // shared session
     var session = NSURLSession.sharedSession()
@@ -32,7 +33,7 @@ class Client: NSObject {
             
             guard (error == nil) else {
                 print("There is an error with your request")
-//                print(error!.localizedDescription)
+                self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
                 return
             }
             
@@ -67,7 +68,7 @@ class Client: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
                 print("There is an error with your request")
-//                print(error!.localizedDescription)
+                self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
                 return
             }
             

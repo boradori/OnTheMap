@@ -26,7 +26,6 @@ class LoginViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        debugTextLabel.text = ""
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
@@ -37,7 +36,7 @@ class LoginViewController: UIViewController {
                     print(userID)
                     self.completeLogin()
                 } else {
-                    self.displayError("Error: need to implement Reachability to display proper error message")
+                    print("Login failed")
                 }
             }
         }
@@ -63,11 +62,4 @@ extension LoginViewController {
         }
         
     }
-    
-    private func displayError(errorString: String?) {
-        if let errorString = errorString {
-            debugTextLabel.text = errorString
-        }
-    }
-    
 }
