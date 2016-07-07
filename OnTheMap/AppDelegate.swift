@@ -46,8 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Network not reachable")
             
             performUIUpdatesOnMain {
-                let alert = UIAlertController(title: "Alert", message: "Network not reachable", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
             }
             

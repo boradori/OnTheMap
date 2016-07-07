@@ -37,8 +37,8 @@ class LoginViewController: UIViewController {
                     self.completeLogin()
                 } else if badCredentials != nil {
                     performUIUpdatesOnMain {
-                    let credentialsAlert = UIAlertController(title: "Alert", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
-                    credentialsAlert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                    let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
+                    credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(credentialsAlert, animated: true, completion: nil)
                                             }
                 } else {
