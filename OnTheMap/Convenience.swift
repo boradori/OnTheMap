@@ -12,37 +12,39 @@ import MapKit
 
 extension Client {
     
-    func authenticateWithViewController(email: String, password: String, hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, sessionID: String!, userID: String!, error: NSError?) -> Void) {
+    func authenticateWithViewController(email: String, password: String, hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, sessionID: String!, userID: String!, error: NSError?, badCredentials: String!) -> Void) {
         
         let jsonBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
         let parameters = [String:AnyObject]()
         
-        taskForUdacityPostMethod(jsonBody, parameters: parameters) { (result, error) in
+        taskForUdacityPostMethod(jsonBody, parameters: parameters) { (result, badCredentials, error) in
             if let error = error {
                 print(error)
-                completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
+                completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error, badCredentials: nil)
+            } else if badCredentials != nil {
+                completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: nil, badCredentials: badCredentials)
             } else {
                 guard let session = result[Client.JSONResponseKeys.Session] as? [String:AnyObject] else {
-                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error, badCredentials: nil)
                     return
                 }
                 
                 guard let sessionID = session[Client.JSONResponseKeys.ID] as? String else {
-                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error, badCredentials: nil)
                     return
                 }
                 
                 guard let account = result[Client.JSONResponseKeys.Account] as? [String:AnyObject] else {
-                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error, badCredentials: nil)
                     return
                 }
                 
                 guard let userID = account[Client.JSONResponseKeys.Key] as? String else {
-                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error)
+                    completionHandlerForAuth(success: false, sessionID: nil, userID: nil, error: error, badCredentials: nil)
                     return
                 }
                 
-                completionHandlerForAuth(success: true, sessionID: sessionID, userID: userID, error: nil)
+                completionHandlerForAuth(success: true, sessionID: sessionID, userID: userID, error: nil, badCredentials: nil)
             }
         }
         

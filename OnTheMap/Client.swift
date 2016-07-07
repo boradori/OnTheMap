@@ -33,6 +33,7 @@ class Client: NSObject {
             
             guard (error == nil) else {
                 print("There is an error with your request")
+                print(error!.localizedDescription)
                 self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
                 return
             }
@@ -47,15 +48,22 @@ class Client: NSObject {
                 return
             }
             
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGet)
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
+                completionHandlerForGet(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            }
             
+            completionHandlerForGet(result: parsedResult, error: nil)
         }
         
         task.resume()
         return task
     }
     
-    func taskForUdacityPostMethod(jsonBody: String, parameters: [String:AnyObject], completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForUdacityPostMethod(jsonBody: String, parameters: [String:AnyObject], completionHandlerForPost: (result: AnyObject!, badCredentials: String!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
 //        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters))
@@ -68,12 +76,8 @@ class Client: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
                 print("There is an error with your request")
+                print(error!.localizedDescription)
                 self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
-                return
-            }
-            
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX!")
                 return
             }
             
@@ -83,26 +87,23 @@ class Client: NSObject {
             }
             
             /* 5. Parse the data */
-            
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
             
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPost)
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+            } catch {
+                print("Could not parse data as JSON: '\(newData)'")
+                return
+            }
+            
+            let badCredentials: String? = parsedResult?.valueForKey("error") as? String
+            
+            completionHandlerForPost(result: parsedResult, badCredentials: badCredentials, error: nil)
             
         }
         task.resume()
         return task
-    }
-    
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
-        
-        var parsedResult: AnyObject!
-        do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
-        }
-        completionHandlerForConvertData(result: parsedResult, error: nil)
     }
     
     private func URLFromParameters(apiSource: String, parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {

@@ -29,14 +29,21 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-        Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error) in
+        Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error, badCredentials) in
             performUIUpdatesOnMain {
                 if success {
                     print(sessionID)
                     print(userID)
                     self.completeLogin()
+                } else if badCredentials != nil {
+                    performUIUpdatesOnMain {
+                    let credentialsAlert = UIAlertController(title: "Alert", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
+                    credentialsAlert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(credentialsAlert, animated: true, completion: nil)
+                                            }
                 } else {
                     print("Login failed")
+                    print(error?.localizedDescription)
                 }
             }
         }
