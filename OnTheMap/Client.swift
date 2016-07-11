@@ -32,9 +32,8 @@ class Client: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             guard (error == nil) else {
-                print("There is an error with your request")
-                print(error!.localizedDescription)
-                self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
+                print("There is an error with your request PARSE GET METHOD")
+                completionHandlerForGet(result: nil, error: error)
                 return
             }
             
@@ -75,9 +74,8 @@ class Client: NSObject {
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
-                print("There is an error with your request")
-                print(error!.localizedDescription)
-                self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
+                print("There is an error with your request UDACITY POST METHOD")
+                completionHandlerForPost(result: nil, badCredentials: nil, error: error)
                 return
             }
             

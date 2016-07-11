@@ -10,6 +10,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -40,10 +42,9 @@ class LoginViewController: UIViewController {
                     let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
                     credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(credentialsAlert, animated: true, completion: nil)
-                                            }
-                } else {
-                    print("Login failed")
-                    print(error?.localizedDescription)
+                    }
+                } else { // Reachability for no internet connection
+                    self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
                 }
             }
         }

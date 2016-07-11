@@ -50,7 +50,7 @@ extension Client {
         
     }
     
-    func getStudentLocations(limit: String, skip: String, completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, errorString: NSError?) -> Void) {
+    func getStudentLocations(limit: String, skip: String, completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
         let parameters = [Client.ParameterKeys.Limit: limit, Client.ParameterKeys.Skip: skip, Client.ParameterKeys.Order: "-updatedAt"]
@@ -59,13 +59,13 @@ extension Client {
         
         taskForParseGetMethod(method, parameters: parameters) { (result, error) in
             if let error = error {
-                completionHandlerForStudentLocations(success: false, results: nil, errorString: error)
+                completionHandlerForStudentLocations(success: false, results: nil, error: error)
             } else {
                 guard let results = result[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
-                    completionHandlerForStudentLocations(success: false, results: nil, errorString: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                    completionHandlerForStudentLocations(success: false, results: nil, error: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
                     return
                 }
-                completionHandlerForStudentLocations(success: true, results: results, errorString: nil)
+                completionHandlerForStudentLocations(success: true, results: results, error: nil)
             }
         }
     }    

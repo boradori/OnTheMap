@@ -108,8 +108,8 @@
 				0C8AA01F1D07F4020058B2F3 /* Constants.swift */,
 				0C1D98181D14F8FF002B682A /* StudentInformation.swift */,
 				0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */,
-				0C8AA0211D07F4380058B2F3 /* Convenience.swift */,
 				0C19DA041D1A890400903381 /* StudentInfoTableCell.swift */,
+				0C8AA0211D07F4380058B2F3 /* Convenience.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

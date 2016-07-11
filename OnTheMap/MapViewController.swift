@@ -24,7 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func loadStudentInformation() {
-        Client.sharedInstance().getStudentLocations("100", skip: "10") { (success, results, errorString) in
+        Client.sharedInstance().getStudentLocations("100", skip: "10") { (success, results, error) in
             if success {
                 
                 // Create an MKPointAnnocation for each dictionary in studentLocation.
@@ -60,6 +60,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     self.mapView.addAnnotations(annotations)
                 }
                 
+            } else {
+                performUIUpdatesOnMain {
+                    let credentialsAlert = UIAlertController(title: "Cannot download due to bad connectivity", message: "\(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                    credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(credentialsAlert, animated: true, completion: nil)
+                }
             }
         }   
     }
