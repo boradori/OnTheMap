@@ -53,6 +53,7 @@ class Client: NSObject {
             } catch {
                 let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
                 completionHandlerForGet(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
             }
             
             completionHandlerForGet(result: parsedResult, error: nil)
@@ -91,7 +92,8 @@ class Client: NSObject {
             do {
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
             } catch {
-                print("Could not parse data as JSON: '\(newData)'")
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(newData)'"]
+                completionHandlerForPost(result: nil, badCredentials: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
                 return
             }
             

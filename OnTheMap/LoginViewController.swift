@@ -39,11 +39,11 @@ class LoginViewController: UIViewController {
                     self.completeLogin()
                 } else if badCredentials != nil {
                     performUIUpdatesOnMain {
-                    let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
-                    credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(credentialsAlert, animated: true, completion: nil)
+                        let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
+                        credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(credentialsAlert, animated: true, completion: nil)
                     }
-                } else { // Reachability for no internet connection
+                } else { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
                     self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
                 }
             }

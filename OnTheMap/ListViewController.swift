@@ -58,8 +58,24 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        <#code#>
-//    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let app = UIApplication.sharedApplication()
+        // check for nil
+        if let toOpen = StudentInformationModel.sharedInstance().studentInformationArray[indexPath.row].mediaURL {
+            // create NSURL instance
+            if let url = NSURL(string: toOpen) {
+                // check if your application can open the NSURL instance
+                if app.canOpenURL(url) {
+                    app.openURL(url)
+                } else {
+                    performUIUpdatesOnMain {
+                        let invalidURLAlert = UIAlertController(title: "Error", message: "Invalid URL", preferredStyle: UIAlertControllerStyle.Alert)
+                        invalidURLAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(invalidURLAlert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
     
 }
