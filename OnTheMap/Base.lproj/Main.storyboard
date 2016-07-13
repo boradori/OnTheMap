@@ -225,7 +225,9 @@
         <scene sceneID="PrH-FT-oAU">
             <objects>
                 <tabBarController id="F5K-py-GG2" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="c7H-Pd-emK"/>
+                    <navigationItem key="navigationItem" id="c7H-Pd-emK">
+                        <barButtonItem key="rightBarButtonItem" image="pin" id="eBD-iS-ImX"/>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="adJ-Jj-9GX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
