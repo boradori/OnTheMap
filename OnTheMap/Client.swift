@@ -75,7 +75,7 @@ class Client: NSObject {
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
-                print("There is an error with your request UDACITY POST METHOD")
+                print("There is an error with your request: UDACITY POST METHOD")
                 completionHandlerForPost(result: nil, badCredentials: nil, error: error)
                 return
             }
@@ -102,6 +102,52 @@ class Client: NSObject {
             completionHandlerForPost(result: parsedResult, badCredentials: badCredentials, error: nil)
             
         }
+        task.resume()
+        return task
+    }
+    
+    func taskForUdacityDeleteMethod(parameters: [String:AnyObject], completionHandlerForDelete: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters))
+        
+        request.HTTPMethod = "DELETE"
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request: UDACITY DELETE METHOD")
+                completionHandlerForDelete(result: nil, error: error)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request")
+                return
+            }
+            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+//            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(newData)'"]
+                completionHandlerForDelete(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
+            }
+            print(parsedResult)
+            completionHandlerForDelete(result: parsedResult, error: nil)
+            
+        }
+        
         task.resume()
         return task
     }

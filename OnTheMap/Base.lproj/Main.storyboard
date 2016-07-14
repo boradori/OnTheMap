@@ -166,7 +166,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" id="Ep6-SF-9V2"/>
                     <navigationItem key="navigationItem" id="fUf-f6-E4v">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Omg-ps-e1Z"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Omg-ps-e1Z">
+                            <connections>
+                                <action selector="logout:" destination="erz-Wy-pYX" id="Gz5-TV-obO"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="pin" id="Drc-sk-5zq"/>
                     </navigationItem>
                     <connections>
@@ -236,7 +240,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EwJ-9f-cb5">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="JGL-RW-vCa"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="JGL-RW-vCa">
+                            <connections>
+                                <action selector="logout:" destination="jeV-uO-7FO" id="t5J-bR-xxX"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="pin" id="DvK-C2-PDj"/>
                     </navigationItem>
                     <connections>

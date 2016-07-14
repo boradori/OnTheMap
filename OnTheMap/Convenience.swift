@@ -47,7 +47,6 @@ extension Client {
                 completionHandlerForAuth(success: true, sessionID: sessionID, userID: userID, error: nil, badCredentials: nil)
             }
         }
-        
     }
     
     func getStudentLocations(limit: String, skip: String, completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
@@ -68,5 +67,22 @@ extension Client {
                 completionHandlerForStudentLocations(success: true, results: results, error: nil)
             }
         }
-    }    
+    }
+    
+    func logoutFromUdacity(completionHandlerForLogoutFromUdacity: (success: Bool, results: [String:AnyObject]!, error: NSError?) -> Void) {
+        
+        let parameters = [String:AnyObject]()
+        
+        taskForUdacityDeleteMethod(parameters) { (result, error) in
+            if let error = error {
+                completionHandlerForLogoutFromUdacity(success: false, results: nil, error: error)
+            } else {
+                guard let results = result[Client.JSONResponseKeys.Session] as? [String:AnyObject] else {
+                    completionHandlerForLogoutFromUdacity(success: false, results: nil, error: NSError(domain: "logoutFromUdacity", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse logout result"]))
+                    return
+                }
+                completionHandlerForLogoutFromUdacity(success: true, results: results, error: nil)
+            }
+        }
+    }
 }

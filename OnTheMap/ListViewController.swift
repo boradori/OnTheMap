@@ -78,4 +78,20 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    @IBAction func logout(sender: AnyObject) {
+        Client.sharedInstance().logoutFromUdacity { (success, results, error) in
+            if success {
+                performUIUpdatesOnMain {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            } else {
+                performUIUpdatesOnMain {
+                    let logoutAlert = UIAlertController(title: "Cannot logout", message: "\(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                    logoutAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(logoutAlert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
 }
