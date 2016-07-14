@@ -51,9 +51,11 @@ class LoginViewController: UIViewController {
     }
     
     private func completeLogin() {
-        debugTextLabel.text = ""
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
         presentViewController(controller, animated: true, completion: nil)
+//        performUIUpdatesOnMain {
+//            self.performSegueWithIdentifier("loginSegue", sender: nil)
+//        }
     }
 }
 

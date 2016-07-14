@@ -104,27 +104,12 @@
                         <outlet property="loginButton" destination="f7J-h3-gzR" id="Yj6-7Y-hen"/>
                         <outlet property="passwordField" destination="SQk-wE-ivc" id="5tJ-fM-ESm"/>
                         <outlet property="signUpButton" destination="aWt-e6-Dyh" id="kLi-af-Ygy"/>
+                        <segue destination="F5K-py-GG2" kind="presentation" identifier="loginSegue" id="EVC-B0-qRS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="657"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ANT-kF-J3N">
-            <objects>
-                <navigationController storyboardIdentifier="ManagerNavigationController" id="cl5-2C-21I" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VNS-m6-aCh">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="F5K-py-GG2" kind="relationship" relationship="rootViewController" id="E7L-iA-82l"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uaw-oS-Xem" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1130" y="681"/>
+            <point key="canvasLocation" x="1057" y="678"/>
         </scene>
         <!--List-->
         <scene sceneID="U2I-cE-id6">
@@ -180,15 +165,53 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" id="Ep6-SF-9V2"/>
+                    <navigationItem key="navigationItem" id="fUf-f6-E4v">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Omg-ps-e1Z"/>
+                        <barButtonItem key="rightBarButtonItem" image="pin" id="Drc-sk-5zq"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="nnH-Gn-nqe" id="22G-Lu-f0b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uhd-l2-IiA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2677" y="1011"/>
+            <point key="canvasLocation" x="3433" y="1049"/>
         </scene>
         <!--Map-->
+        <scene sceneID="OeP-9C-KbZ">
+            <objects>
+                <navigationController storyboardIdentifier="mapNavigationController" id="rBm-Ho-ogi" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="ZD2-I9-UNi"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CgD-Rj-pdD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="jeV-uO-7FO" kind="relationship" relationship="rootViewController" id="CMC-My-y8A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGK-0r-93m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2722" y="313"/>
+        </scene>
+        <!--List-->
+        <scene sceneID="XP7-yJ-8bC">
+            <objects>
+                <navigationController id="jq7-IE-LQA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="List" image="list" id="Pda-du-1bB"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8B0-9q-uef">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="erz-Wy-pYX" kind="relationship" relationship="rootViewController" id="NRA-cJ-KV7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MmK-6p-R5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2728" y="1049"/>
+        </scene>
+        <!--Map View Controller-->
         <scene sceneID="gNN-Ra-pnH">
             <objects>
                 <viewController id="jeV-uO-7FO" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -212,19 +235,22 @@
                             <constraint firstAttribute="trailingMargin" secondItem="BOS-00-BuN" secondAttribute="trailing" constant="-20" id="dUg-GO-mIx"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" image="map" id="F11-fX-oo5"/>
+                    <navigationItem key="navigationItem" id="EwJ-9f-cb5">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="JGL-RW-vCa"/>
+                        <barButtonItem key="rightBarButtonItem" image="pin" id="DvK-C2-PDj"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="BOS-00-BuN" id="s13-hm-1zd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ue-SV-sF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2676" y="350"/>
+            <point key="canvasLocation" x="3433" y="313"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PrH-FT-oAU">
             <objects>
-                <tabBarController id="F5K-py-GG2" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarController" id="F5K-py-GG2" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="c7H-Pd-emK">
                         <barButtonItem key="rightBarButtonItem" image="pin" id="eBD-iS-ImX"/>
                     </navigationItem>
@@ -234,8 +260,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="jeV-uO-7FO" kind="relationship" relationship="viewControllers" id="fQB-eE-cHW"/>
-                        <segue destination="erz-Wy-pYX" kind="relationship" relationship="viewControllers" id="OWU-co-DIB"/>
+                        <segue destination="rBm-Ho-ogi" kind="relationship" relationship="viewControllers" id="UlB-nw-G41"/>
+                        <segue destination="jq7-IE-LQA" kind="relationship" relationship="viewControllers" id="EaS-oQ-DfK"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jtk-80-7uk" userLabel="First Responder" sceneMemberID="firstResponder"/>
