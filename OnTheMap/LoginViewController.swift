@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -24,6 +24,9 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         emailField.keyboardType = .EmailAddress
         passwordField.secureTextEntry = true
+        
+        emailField.delegate = self
+        passwordField.delegate = self
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -57,6 +60,12 @@ class LoginViewController: UIViewController {
 //            self.performSegueWithIdentifier("loginSegue", sender: nil)
 //        }
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 
 
