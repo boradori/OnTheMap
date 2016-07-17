@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
 
         do {
             internetReach = try Reachability.reachabilityForInternetConnection()
@@ -31,7 +33,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Error! No internet connection!")
         }
         
+        // startNotifier always listens to status change such as switching over from wifi to 3G
+        do {
+         try internetReach?.startNotifier()
+        } catch {
+            print("Notifier could not start")
+        }
+        
+        if internetReach != nil {
+            statusChangedWithReachability(internetReach!)
+        }
+        
         return true
+    }
+    
+    func reachabilityChanged(notification: NSNotification) {
+        print("Reachability status changed")
+        reachability = notification.object as? Reachability
+        statusChangedWithReachability(internetReach!)
     }
     
     
@@ -44,13 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if networkStatus.hashValue == Reachability.NetworkStatus.NotReachable.hashValue {
             print("Network not reachable")
-            
-            performUIUpdatesOnMain {
-                let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-            }
-            
             reachabilityStatus = kNOTREACHABLE
         } else if networkStatus.hashValue == Reachability.NetworkStatus.ReachableViaWiFi.hashValue {
             print("Reachable via WIFI")
@@ -81,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
 
 

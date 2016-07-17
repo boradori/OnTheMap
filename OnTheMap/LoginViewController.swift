@@ -10,8 +10,6 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -46,8 +44,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(credentialsAlert, animated: true, completion: nil)
                     }
-                } else { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
-                    self.appDelegate.statusChangedWithReachability(self.appDelegate.internetReach!)
+                } else if reachabilityStatus == kNOTREACHABLE { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
+                    performUIUpdatesOnMain {
+                        let noInternetAlert = UIAlertController(title: "No Internet Connectivity", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
+                        noInternetAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(noInternetAlert, animated: true, completion: nil)
+                    }
+
                 }
             }
         }
