@@ -17,8 +17,14 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     
     @IBOutlet weak var locationTextField: UITextField!
     
+    @IBOutlet weak var findOnMapButton: UIButton!
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        locationTextField.delegate = self
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
@@ -26,9 +32,23 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         
     }
     
-    func findLocation(completionHandlerForLocation: (coordinates: CLLocationCoordinate2D?) -> Void) {
-        var placemark: CLPlacemark!
-//        error!.localizedDescription.containsString("The Internet connection appears to be offline")
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    @IBAction func findOnMap(sender: AnyObject) {
+        findLocation { (coordinates) in
+            if let location = coordinates {
+                self.displayLocation(location)
+            } else {
+                print("erorr")
+            }
+        }
+    }
+    
+    func findLocation(completionHandlerForLocation: (coordinate: CLLocationCoordinate2D?) -> Void) {
         CLGeocoder().geocodeAddressString(locationTextField.text!) { (placemark, error) in
             guard (error == nil) else {
                 if reachabilityStatus == kNOTREACHABLE {
@@ -45,25 +65,45 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                     }
                 }
                 
-                completionHandlerForLocation(coordinates: nil)
+                completionHandlerForLocation(coordinate: nil)
                 return
             }
             
-            guard let placemark = placemark!.first else {
-                completionHandlerForLocation(coordinates: nil)
+            guard let placemark = placemark?.first else {
+                completionHandlerForLocation(coordinate: nil)
                 return
             }
             
-            completionHandlerForLocation(coordinates: placemark.location?.coordinate)
+            completionHandlerForLocation(coordinate: placemark.location?.coordinate)
         }
-
-    }
-    
-    
-    
-    @IBAction func findOnMap(sender: AnyObject) {
         
     }
+
+    func displayLocation(location: CLLocationCoordinate2D) -> Void {
+        let mapView = MKMapView(frame: midView.bounds)
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+        
+        midView.insertSubview(mapView, belowSubview: bottomView)
+//        bottomView.alpha = 0.0
+//        findOnMapButton.alpha = 1.0
+        
+        
+        let lat = CLLocationDegrees(location.latitude)
+        let long = CLLocationDegrees(location.longitude)
+        
+        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        
+        var annotations = [MKPointAnnotation]()
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotations.append(annotation)
+        
+        mapView.addAnnotation(annotation)
+        mapView.showAnnotations(annotations, animated: true)
+        
+    }
+    
     
     
     @IBAction func cancel(sender: AnyObject) {

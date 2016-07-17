@@ -131,7 +131,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lhw-Gr-hGI" id="6a5-wd-syg">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="4HO-YI-uBC">
@@ -288,7 +288,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you studying today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Onn-eD-uuu">
-                                        <rect key="frame" x="0.0" y="38" width="600" height="21"/>
+                                        <rect key="frame" x="0.0" y="38" width="600" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -316,7 +316,7 @@
                                         <rect key="frame" x="0.0" y="383" width="600" height="89"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGt-8U-WMs">
-                                                <rect key="frame" x="159" y="30" width="276" height="30"/>
+                                                <rect key="frame" x="95" y="30" width="420" height="30"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="tintColor" red="0.4942686597" green="0.66490101440000005" blue="0.595568714" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Find on the Map"/>
@@ -328,9 +328,9 @@
                                         <color key="backgroundColor" red="0.15944684710000001" green="0.42699178900000001" blue="0.59120592949999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="NGt-8U-WMs" secondAttribute="bottom" constant="29" id="2Pn-gV-IOS"/>
-                                            <constraint firstAttribute="trailing" secondItem="NGt-8U-WMs" secondAttribute="trailing" constant="165" id="KC5-Wg-yVe"/>
+                                            <constraint firstAttribute="trailing" secondItem="NGt-8U-WMs" secondAttribute="trailing" constant="85" id="KC5-Wg-yVe"/>
                                             <constraint firstItem="NGt-8U-WMs" firstAttribute="top" secondItem="imn-9R-FcR" secondAttribute="top" constant="30" id="Z8P-66-sJv"/>
-                                            <constraint firstItem="NGt-8U-WMs" firstAttribute="leading" secondItem="imn-9R-FcR" secondAttribute="leading" constant="159" id="j6R-dl-zq4"/>
+                                            <constraint firstItem="NGt-8U-WMs" firstAttribute="leading" secondItem="imn-9R-FcR" secondAttribute="leading" constant="95" id="j6R-dl-zq4"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -365,6 +365,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="imn-9R-FcR" id="xzD-mt-gXN"/>
+                        <outlet property="findOnMapButton" destination="NGt-8U-WMs" id="kaF-Fh-wHv"/>
                         <outlet property="locationTextField" destination="oNo-I4-xly" id="7gJ-Ai-Hpc"/>
                         <outlet property="midView" destination="Uth-zJ-Xuo" id="g34-Hv-izr"/>
                         <outlet property="topView" destination="P65-ai-svC" id="Zgr-iF-L06"/>
