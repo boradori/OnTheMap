@@ -71,15 +71,18 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                 self.mediaURLTextView.text = "Enter a Link to Share Here"
                 
             })
-        } else {
-            
-//            topViewLabel.text = "Enter a Link to Share Here"
-            
+        } else if findOnMapButton.currentTitle == "Submit" {
             // Send location and URL through submit using parse post method
             
             
             
             
+        } else {
+            performUIUpdatesOnMain {
+                let locationErrorAlert = UIAlertController(title: "Geocoding Error", message: "Could not find location", preferredStyle: UIAlertControllerStyle.Alert)
+                locationErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(locationErrorAlert, animated: true, completion: nil)
+            }
         }
 
     }

@@ -16,7 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var debugTextLabel: UILabel!
     
-    var session: NSURLSession!
+    var session = NSURLSession.sharedSession()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error, badCredentials) in
             performUIUpdatesOnMain {
                 if success {
-                    print(sessionID)
-                    print(userID)
+                    Client.sharedInstance().sessionID = sessionID
+                    Client.sharedInstance().userID = userID
+                    
+                    Client.sharedInstance().getStudentName({ (success, firstName, lastName, error) in
+                        if success {
+                            Client.sharedInstance().firstName = firstName
+                            Client.sharedInstance().lastName = lastName
+                            print("\(firstName) \(lastName)")
+                            
+                        } else {
+                            performUIUpdatesOnMain {
+                                let noUserInfoAlert = UIAlertController(title: "Error", message: "Failed to get user information", preferredStyle: UIAlertControllerStyle.Alert)
+                                noUserInfoAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                self.presentViewController(noUserInfoAlert, animated: true, completion: nil)
+                            }
+                        }
+                    })
                     self.completeLogin()
                 } else if badCredentials != nil {
                     performUIUpdatesOnMain {
@@ -59,9 +74,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
         presentViewController(controller, animated: true, completion: nil)
-
-//        self.performSegueWithIdentifier("loginSegue", sender: nil)
-
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

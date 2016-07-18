@@ -12,11 +12,12 @@ extension Client {
         
         static let ParseAppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let ApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let ContentType = "application/json"
         
         static let ApiScheme = "https"
         
         static let ApiHostUdacity = "www.udacity.com"
-        static let ApiPathUdacity = "/api/session"
+        static let ApiPathUdacity = "/api"
         
         static let ApiHostParse = "api.parse.com"
         static let ApiPathParse = "/1/classes"
@@ -33,6 +34,10 @@ extension Client {
     
     // MARK: Methods
     struct Methods {
+        
+        static let Session = "/session"
+        static let Users = "/users"
+        
         static let StudentLocation = "/StudentLocation"
     }
     
@@ -59,6 +64,10 @@ extension Client {
         static let Key = "key"
         
         static let Results = "results"
+        
+        static let User = "user"
+        static let firstName = "first_name"
+        static let lastName = "last_name"
     }
     
 }

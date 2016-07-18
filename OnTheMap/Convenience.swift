@@ -49,7 +49,58 @@ extension Client {
         }
     }
     
-    func getStudentLocations(limit: String, skip: String, completionHandlerForStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
+    func getStudentName(completionHandlerForName: (success: Bool, firstName: String!, lastName: String!, error: NSError?) -> Void) {
+        
+        let parameters = [String:AnyObject]()
+        
+        taskForUdacityGetMethod(parameters) { (result, error) in
+            guard (error == nil) else {
+                print(error)
+                completionHandlerForName(success: false, firstName: nil, lastName: nil, error: error)
+                return
+            }
+            
+            guard let user = result[Client.JSONResponseKeys.User] as? [String:AnyObject] else {
+                completionHandlerForName(success: false, firstName: nil, lastName: nil, error: error)
+                return
+            }
+            
+            guard let firstName = user[Client.JSONResponseKeys.firstName] as? String else {
+                completionHandlerForName(success: false, firstName: nil, lastName: nil, error: error)
+                return
+            }
+            
+            guard let lastName = user[Client.JSONResponseKeys.lastName] as? String else {
+                completionHandlerForName(success: false, firstName: nil, lastName: nil, error: error)
+                return
+            }
+            
+            completionHandlerForName(success: true, firstName: firstName, lastName: lastName, error: nil)
+        }
+        
+    }
+    
+    func addStudentLocation(studentInformation: StudentInformation, completionHandlerForAddingStudentLocation: (success: Bool, results: [String:AnyObject]!, error: NSError?) -> Void) {
+        
+        let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}"
+        let method = Methods.StudentLocation
+        let parameters = [String:AnyObject]()
+        
+        taskForParsePostMethod(jsonBody, method: method, parameters: parameters) { (result, error) in
+            if let error = error {
+                completionHandlerForAddingStudentLocation(success: false, results: nil, error: error)
+            } else {
+                guard let results = result[Client.JSONResponseKeys.Results] as? [String:AnyObject] else {
+                    completionHandlerForAddingStudentLocation(success: false, results: nil, error: NSError(domain: "addStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not add student location"]))
+                    return
+                }
+                completionHandlerForAddingStudentLocation(success: true, results: results, error: nil)
+            }
+        }
+        
+    }
+    
+    func getStudentLocations(limit: String, skip: String, completionHandlerForGettingStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
         let parameters = [Client.ParameterKeys.Limit: limit, Client.ParameterKeys.Skip: skip, Client.ParameterKeys.Order: "-updatedAt"]
@@ -58,13 +109,13 @@ extension Client {
         
         taskForParseGetMethod(method, parameters: parameters) { (result, error) in
             if let error = error {
-                completionHandlerForStudentLocations(success: false, results: nil, error: error)
+                completionHandlerForGettingStudentLocations(success: false, results: nil, error: error)
             } else {
                 guard let results = result[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
-                    completionHandlerForStudentLocations(success: false, results: nil, error: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
+                    completionHandlerForGettingStudentLocations(success: false, results: nil, error: NSError(domain: "getStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student locations"]))
                     return
                 }
-                completionHandlerForStudentLocations(success: true, results: results, error: nil)
+                completionHandlerForGettingStudentLocations(success: true, results: results, error: nil)
             }
         }
     }

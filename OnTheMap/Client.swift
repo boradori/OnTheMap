@@ -16,12 +16,11 @@ class Client: NSObject {
     // shared session
     var session = NSURLSession.sharedSession()
     
-    var email: String? = nil
-    var password: String? = nil
+    var sessionID: String!
+    var userID: String!
     
-    // authenticate state
-    var sessionID: String? = nil
-    var userID: String? = nil
+    var firstName: String!
+    var lastName: String!
     
     func taskForParseGetMethod(method: String, parameters: [String:AnyObject], completionHandlerForGet: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
@@ -63,10 +62,88 @@ class Client: NSObject {
         return task
     }
     
+    func taskForParsePostMethod(jsonBody: String, method: String, parameters: [String:AnyObject], completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))
+        request.HTTPMethod = "POST"
+        request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(Constants.ContentType, forHTTPHeaderField: "Content-Type")
+        
+        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request: PARSE POST METHOD")
+                completionHandlerForPost(result: nil, error: error)
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX!")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request")
+                return
+            }
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
+                completionHandlerForPost(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            completionHandlerForPost(result: parsedResult, error: nil)
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    func taskForUdacityGetMethod(parameters: [String:AnyObject], completionHandlerForGet: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters, withPathExtension: Methods.Users + "/" + userID))
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request: UDACITY GET METHOD")
+                completionHandlerForGet(result: nil, error: error)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request.")
+                return
+            }
+            
+            /* 5. Parse the data */
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(newData)'"]
+                completionHandlerForGet(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
+            }
+
+            completionHandlerForGet(result: parsedResult, error: nil)
+            
+        }
+        
+        task.resume()
+        return task
+    }
+    
     func taskForUdacityPostMethod(jsonBody: String, parameters: [String:AnyObject], completionHandlerForPost: (result: AnyObject!, badCredentials: String!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-//        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters))
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters, withPathExtension: Methods.Session))
         
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -108,7 +185,7 @@ class Client: NSObject {
     
     func taskForUdacityDeleteMethod(parameters: [String:AnyObject], completionHandlerForDelete: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters))
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters, withPathExtension: nil))
         
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
@@ -152,7 +229,7 @@ class Client: NSObject {
         return task
     }
     
-    private func URLFromParameters(apiSource: String, parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+    private func URLFromParameters(apiSource: String, parameters: [String:AnyObject], withPathExtension: String?) -> NSURL {
         
         let components = NSURLComponents()
         components.scheme = Client.Constants.ApiScheme

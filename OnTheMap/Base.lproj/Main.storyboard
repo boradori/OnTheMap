@@ -104,7 +104,6 @@
                         <outlet property="loginButton" destination="f7J-h3-gzR" id="Yj6-7Y-hen"/>
                         <outlet property="passwordField" destination="SQk-wE-ivc" id="5tJ-fM-ESm"/>
                         <outlet property="signUpButton" destination="aWt-e6-Dyh" id="kLi-af-Ygy"/>
-                        <segue destination="F5K-py-GG2" kind="presentation" identifier="loginSegue" id="EVC-B0-qRS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
