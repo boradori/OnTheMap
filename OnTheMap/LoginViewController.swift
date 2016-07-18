@@ -59,9 +59,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
         presentViewController(controller, animated: true, completion: nil)
-//        performUIUpdatesOnMain {
-//            self.performSegueWithIdentifier("loginSegue", sender: nil)
-//        }
+
+//        self.performSegueWithIdentifier("loginSegue", sender: nil)
+
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

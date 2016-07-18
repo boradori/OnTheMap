@@ -9,47 +9,83 @@
 import UIKit
 import MapKit
 
-class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
+class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var midView: UIView!
     @IBOutlet weak var bottomView: UIView!
     
-    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var locationTextView: UITextView!
+    @IBOutlet weak var mediaURLTextView: UITextView!
     
     @IBOutlet weak var findOnMapButton: UIButton!
+    
+    var newStudentLocation: Bool!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationTextField.delegate = self
+        locationTextView.delegate = self
+        mediaURLTextView.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        
+        mediaURLTextView.editable = false
+        findOnMapButton.setTitle("Find on the Map", forState: .Normal)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n"  // Recognizes enter key in keyboard
+        {
+            textView.resignFirstResponder()
+            return false
+        }
         return true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        locationTextView.text = ""
+        if findOnMapButton.currentTitle == "Submit" {
+            mediaURLTextView.text = ""
+        }
     }
     
     
     @IBAction func findOnMap(sender: AnyObject) {
-        findLocation { (coordinates) in
-            if let location = coordinates {
+        if findOnMapButton.currentTitle == "Find on the Map" {
+            findLocation({ (coordinate) in
+                guard let location = coordinate else {
+                    print("There is an error with your request: findLocation")
+                    return
+                }
+                
+                self.bottomView.alpha = 0.5
+                self.findOnMapButton.setTitle("Submit", forState: .Normal)
                 self.displayLocation(location)
-            } else {
-                print("erorr")
-            }
+                
+                // let user enter URL
+                self.mediaURLTextView.editable = true
+                self.mediaURLTextView.text = "Enter a Link to Share Here"
+                
+            })
+        } else {
+            
+//            topViewLabel.text = "Enter a Link to Share Here"
+            
+            // Send location and URL through submit using parse post method
+            
+            
+            
+            
         }
+
     }
     
     func findLocation(completionHandlerForLocation: (coordinate: CLLocationCoordinate2D?) -> Void) {
-        CLGeocoder().geocodeAddressString(locationTextField.text!) { (placemark, error) in
+        CLGeocoder().geocodeAddressString(locationTextView.text!) { (placemark, error) in
             guard (error == nil) else {
                 if reachabilityStatus == kNOTREACHABLE {
                     performUIUpdatesOnMain {
@@ -85,8 +121,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         mapView.scrollEnabled = false
         
         midView.insertSubview(mapView, belowSubview: bottomView)
-//        bottomView.alpha = 0.0
-//        findOnMapButton.alpha = 1.0
+        
         
         
         let lat = CLLocationDegrees(location.latitude)
