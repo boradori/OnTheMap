@@ -68,6 +68,8 @@ extension Client {
         static let User = "user"
         static let firstName = "first_name"
         static let lastName = "last_name"
+        static let objectID = "objectId"
+        
     }
     
 }

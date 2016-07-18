@@ -130,7 +130,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lhw-Gr-hGI" id="6a5-wd-syg">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="4HO-YI-uBC">
@@ -399,39 +399,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jtk-80-7uk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1854" y="678"/>
-        </scene>
-        <!--Auth View Controller-->
-        <scene sceneID="qWY-y3-mNH">
-            <objects>
-                <viewController storyboardIdentifier="AuthViewController" id="teC-KG-7eJ" customClass="AuthViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RZt-ex-bM9"/>
-                        <viewControllerLayoutGuide type="bottom" id="5rN-uw-Y0F"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Sbn-js-BfU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9p-Sf-XM7">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="z9p-Sf-XM7" firstAttribute="top" secondItem="RZt-ex-bM9" secondAttribute="bottom" constant="-20" id="O7Y-DO-xfv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="z9p-Sf-XM7" secondAttribute="trailing" constant="-20" id="mhg-fn-aQG"/>
-                            <constraint firstItem="5rN-uw-Y0F" firstAttribute="top" secondItem="z9p-Sf-XM7" secondAttribute="bottom" id="vgF-Ss-aGA"/>
-                            <constraint firstItem="z9p-Sf-XM7" firstAttribute="leading" secondItem="Sbn-js-BfU" secondAttribute="leadingMargin" constant="-20" id="zaJ-Xd-blk"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="webView" destination="z9p-Sf-XM7" id="vbe-of-GVk"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ezA-HS-QBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1024" y="1349"/>
         </scene>
     </scenes>
     <resources>

@@ -42,8 +42,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         if success {
                             Client.sharedInstance().firstName = firstName
                             Client.sharedInstance().lastName = lastName
-                            print("\(firstName) \(lastName)")
-                            
                         } else {
                             performUIUpdatesOnMain {
                                 let noUserInfoAlert = UIAlertController(title: "Error", message: "Failed to get user information", preferredStyle: UIAlertControllerStyle.Alert)
@@ -79,21 +77,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-    
-}
-
-
-extension LoginViewController {
-    
-    private func setUIEnabled(enabled: Bool) {
-        loginButton.enabled = enabled
-        
-        if enabled {
-            loginButton.alpha = 1.0
-        } else {
-            loginButton.alpha = 0.5
-        }
-        
     }
 }

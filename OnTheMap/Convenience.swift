@@ -80,25 +80,47 @@ extension Client {
         
     }
     
-    func addStudentLocation(studentInformation: StudentInformation, completionHandlerForAddingStudentLocation: (success: Bool, results: [String:AnyObject]!, error: NSError?) -> Void) {
+    func addStudentLocation(studentInformation: StudentInformation, completionHandlerForAddingStudentLocation: (success: Bool, objectID: String?, error: NSError?) -> Void) {
         
         let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}"
+
+        
         let method = Methods.StudentLocation
         let parameters = [String:AnyObject]()
         
         taskForParsePostMethod(jsonBody, method: method, parameters: parameters) { (result, error) in
             if let error = error {
-                completionHandlerForAddingStudentLocation(success: false, results: nil, error: error)
+                completionHandlerForAddingStudentLocation(success: false, objectID: nil, error: error)
             } else {
-                guard let results = result[Client.JSONResponseKeys.Results] as? [String:AnyObject] else {
-                    completionHandlerForAddingStudentLocation(success: false, results: nil, error: NSError(domain: "addStudentLocation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not add student location"]))
+                print(result)
+                guard let objectID = result[Client.JSONResponseKeys.objectID] as? String else {
+                    completionHandlerForAddingStudentLocation(success: false, objectID: nil, error: NSError(domain: "objectID", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse objectID"]))
                     return
                 }
-                completionHandlerForAddingStudentLocation(success: true, results: results, error: nil)
+                completionHandlerForAddingStudentLocation(success: true, objectID: objectID, error: nil)
+            }
+        }
+    }
+    
+    func updateStudentLocation(objectID: String, studentInformation: StudentInformation, completionHandlerForupdatingStudentLocation: (success: Bool, error: NSError?) -> Void) {
+        
+        let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}"
+        
+        let method = Methods.StudentLocation + "/" + objectID
+        let parameters = [String:AnyObject]()
+        
+        taskForParsePutMethod(jsonBody, method: method, parameters: parameters) { (result, error) in
+            if let error = error {
+                print(error)
+                completionHandlerForupdatingStudentLocation(success: false, error: error)
+            } else {
+                completionHandlerForupdatingStudentLocation(success: true, error: nil)
             }
         }
         
     }
+    
+    
     
     func getStudentLocations(limit: String, skip: String, completionHandlerForGettingStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
         

@@ -22,6 +22,10 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     
     var newStudentLocation: Bool!
     
+    var locationString: String!
+    var userURL: String!
+    var userLocation: CLLocationCoordinate2D!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +60,16 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     
     @IBAction func findOnMap(sender: AnyObject) {
         if findOnMapButton.currentTitle == "Find on the Map" {
-            findLocation({ (coordinate) in
+            
+            locationString = locationTextView.text
+            
+            findLocation(locationString, completionHandlerForLocation: { (coordinate) in
                 guard let location = coordinate else {
                     print("There is an error with your request: findLocation")
                     return
                 }
+                
+                self.userLocation = location
                 
                 self.bottomView.alpha = 0.5
                 self.findOnMapButton.setTitle("Submit", forState: .Normal)
@@ -69,13 +78,42 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                 // let user enter URL
                 self.mediaURLTextView.editable = true
                 self.mediaURLTextView.text = "Enter a Link to Share Here"
-                
             })
         } else if findOnMapButton.currentTitle == "Submit" {
             // Send location and URL through submit using parse post method
             
+            userURL = mediaURLTextView.text
             
+            var newStudentInformation = [String:AnyObject]()
+            newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
+            newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
+            newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
+            newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
+            newStudentInformation[Client.JSONBodyKeys.mediaURL] = userURL
+            newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
+            newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
             
+            let studentInfo = StudentInformation(dictionary: newStudentInformation)
+            
+            Client.sharedInstance().addStudentLocation(studentInfo, completionHandlerForAddingStudentLocation: { (success, objectID, error) in
+                if success {
+                    Client.sharedInstance().objectID = objectID
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    print(error)
+                }
+                
+                
+            })
+            
+//            Client.sharedInstance().updateStudentLocation(Client.sharedInstance().objectID, studentInformation: studentInfo, completionHandlerForupdatingStudentLocation: { (success, error) in
+//                if success {
+//                    print("update successful")
+//                    self.dismissViewControllerAnimated(true, completion: nil)
+//                } else {
+//                    print(error)
+//                }
+//            })
             
         } else {
             performUIUpdatesOnMain {
@@ -87,8 +125,8 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
 
     }
     
-    func findLocation(completionHandlerForLocation: (coordinate: CLLocationCoordinate2D?) -> Void) {
-        CLGeocoder().geocodeAddressString(locationTextView.text!) { (placemark, error) in
+    func findLocation(location: String, completionHandlerForLocation: (coordinate: CLLocationCoordinate2D?) -> Void) {
+        CLGeocoder().geocodeAddressString(location) { (placemark, error) in
             guard (error == nil) else {
                 if reachabilityStatus == kNOTREACHABLE {
                     performUIUpdatesOnMain {

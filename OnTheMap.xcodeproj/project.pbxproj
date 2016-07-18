@@ -20,7 +20,6 @@
 		0C8AA00D1D06A6430058B2F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C8AA00B1D06A6430058B2F3 /* Main.storyboard */; };
 		0C8AA00F1D06A6430058B2F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8AA00E1D06A6430058B2F3 /* Assets.xcassets */; };
 		0C8AA0121D06A6430058B2F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C8AA0101D06A6430058B2F3 /* LaunchScreen.storyboard */; };
-		0C8AA01B1D07F3130058B2F3 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA01A1D07F3130058B2F3 /* AuthViewController.swift */; };
 		0C8AA01E1D07F3EF0058B2F3 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA01D1D07F3EF0058B2F3 /* Client.swift */; };
 		0C8AA0201D07F4020058B2F3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA01F1D07F4020058B2F3 /* Constants.swift */; };
 		0C8AA0221D07F4380058B2F3 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0211D07F4380058B2F3 /* Convenience.swift */; };
@@ -42,7 +41,6 @@
 		0C8AA00E1D06A6430058B2F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C8AA0111D06A6430058B2F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C8AA0131D06A6430058B2F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0C8AA01A1D07F3130058B2F3 /* AuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		0C8AA01D1D07F3EF0058B2F3 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		0C8AA01F1D07F4020058B2F3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0C8AA0211D07F4380058B2F3 /* Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 		0C8AA01C1D07F3770058B2F3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0C8AA01A1D07F3130058B2F3 /* AuthViewController.swift */,
 				0C8AA01D1D07F3EF0058B2F3 /* Client.swift */,
 				0C8AA01F1D07F4020058B2F3 /* Constants.swift */,
 				0C1D98181D14F8FF002B682A /* StudentInformation.swift */,
@@ -212,7 +209,6 @@
 				0C8AA0201D07F4020058B2F3 /* Constants.swift in Sources */,
 				0C8AA0221D07F4380058B2F3 /* Convenience.swift in Sources */,
 				0C8AA00A1D06A6430058B2F3 /* LoginViewController.swift in Sources */,
-				0C8AA01B1D07F3130058B2F3 /* AuthViewController.swift in Sources */,
 				0C8AA01E1D07F3EF0058B2F3 /* Client.swift in Sources */,
 				0C19DA071D1D3B3700903381 /* MapViewController.swift in Sources */,
 				0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */,

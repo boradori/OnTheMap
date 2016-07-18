@@ -18,6 +18,7 @@ class Client: NSObject {
     
     var sessionID: String!
     var userID: String!
+    var objectID: String!
     
     var firstName: String!
     var lastName: String!
@@ -71,19 +72,14 @@ class Client: NSObject {
         request.addValue(Constants.ContentType, forHTTPHeaderField: "Content-Type")
         
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
-        
+
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
                 print("There is an error with your request: PARSE POST METHOD")
                 completionHandlerForPost(result: nil, error: error)
                 return
             }
-            
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX!")
-                return
-            }
-            
+
             guard let data = data else {
                 print("No data was returned with this request")
                 return
@@ -99,6 +95,44 @@ class Client: NSObject {
             }
             
             completionHandlerForPost(result: parsedResult, error: nil)
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    func taskForParsePutMethod(jsonBody: String, method: String, parameters: [String:AnyObject], completionHandlerForPut: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))
+        request.HTTPMethod = "PUT"
+        request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(Constants.ContentType, forHTTPHeaderField: "Content-Type")
+        
+        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request: PARSE POST METHOD")
+                completionHandlerForPut(result: nil, error: error)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request")
+                return
+            }
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
+                completionHandlerForPut(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            completionHandlerForPut(result: parsedResult, error: nil)
         }
         
         task.resume()
@@ -185,7 +219,7 @@ class Client: NSObject {
     
     func taskForUdacityDeleteMethod(parameters: [String:AnyObject], completionHandlerForDelete: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters, withPathExtension: nil))
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters, withPathExtension: Methods.Session))
         
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
