@@ -82,6 +82,19 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                 self.mediaURLTextView.text = "Enter a Link to Share Here"
             })
         } else if findOnMapButton.currentTitle == "Submit" {
+            
+            let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+            activityIndicator.center = self.view.center
+            activityIndicator.startAnimating()
+            self.view.addSubview(activityIndicator)
+            
+            func stopAnimatingActivityIndicator() {
+                performUIUpdatesOnMain {
+                    activityIndicator.stopAnimating()
+                    activityIndicator.removeFromSuperview()
+                }
+            }
+            
             // Send location and URL through submit using parse post method
             
             var newStudentInformation = [String:AnyObject]()
@@ -97,6 +110,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
             
             Client.sharedInstance().queryStudentLocation(Client.sharedInstance().userID, completionHandlerForQueryingStudentLocation: { (duplicated, error) in
                 if duplicated {
+                    
                     Client.sharedInstance().updateStudentLocation(Client.sharedInstance().objectID, studentInformation: studentInfo, completionHandlerForupdatingStudentLocation: { (success, updatedAt, error) in
                         if success {
                             print(updatedAt)
@@ -108,6 +122,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                                 self.presentViewController(updateStudentAlert, animated: true, completion: nil)
                             }
                         }
+                        stopAnimatingActivityIndicator()
                     })
                 } else if duplicated == false {
                     Client.sharedInstance().addStudentLocation(studentInfo, completionHandlerForAddingStudentLocation: { (success, objectID, error) in
@@ -121,6 +136,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                                 self.presentViewController(addStudentAlert, animated: true, completion: nil)
                             }
                         }
+                        stopAnimatingActivityIndicator()
                     })
                 } else if reachabilityStatus == kNOTREACHABLE {
                     performUIUpdatesOnMain {
@@ -128,12 +144,14 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                         noInternetAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(noInternetAlert, animated: true, completion: nil)
                     }
+                    stopAnimatingActivityIndicator()
                 } else {
                     performUIUpdatesOnMain {
                         let locationErrorAlert = UIAlertController(title: "Geocoding Error", message: "\(error?.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
                         locationErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(locationErrorAlert, animated: true, completion: nil)
                     }
+                    stopAnimatingActivityIndicator()
                 }
             })
         }

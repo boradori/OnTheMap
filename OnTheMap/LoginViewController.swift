@@ -49,7 +49,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             performUIUpdatesOnMain {
                 if success {
                     
-                    stopAnimatingActivityIndicator()
+                    
                     
                     Client.sharedInstance().sessionID = sessionID
                     Client.sharedInstance().userID = userID
@@ -65,22 +65,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                 self.presentViewController(noUserInfoAlert, animated: true, completion: nil)
                             }
                         }
+                        stopAnimatingActivityIndicator()
                     })
                     self.completeLogin()
                 } else if badCredentials != nil {
-                    stopAnimatingActivityIndicator()
                     performUIUpdatesOnMain {
                         let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
                         credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(credentialsAlert, animated: true, completion: nil)
                     }
-                } else if reachabilityStatus == kNOTREACHABLE { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
                     stopAnimatingActivityIndicator()
+                } else if reachabilityStatus == kNOTREACHABLE { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
                     performUIUpdatesOnMain {
                         let noInternetAlert = UIAlertController(title: "No Internet Connectivity", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
                         noInternetAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(noInternetAlert, animated: true, completion: nil)
                     }
+                    stopAnimatingActivityIndicator()
 
                 }
             }
