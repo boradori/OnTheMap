@@ -103,7 +103,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                             self.dismissViewControllerAnimated(true, completion: nil)
                         } else {
                             performUIUpdatesOnMain {
-                                let updateStudentAlert = UIAlertController(title: "Updating Student Error", message: "\(error?.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                                let updateStudentAlert = UIAlertController(title: "Updating Student Error", message: "Please enter valid URL", preferredStyle: UIAlertControllerStyle.Alert)
                                 updateStudentAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                                 self.presentViewController(updateStudentAlert, animated: true, completion: nil)
                             }
@@ -116,7 +116,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                             self.dismissViewControllerAnimated(true, completion: nil)
                         } else {
                             performUIUpdatesOnMain {
-                                let addStudentAlert = UIAlertController(title: "Adding Student Error", message: "\(error?.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                                let addStudentAlert = UIAlertController(title: "Adding Student Error", message: "Please enter valid URL", preferredStyle: UIAlertControllerStyle.Alert)
                                 addStudentAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                                 self.presentViewController(addStudentAlert, animated: true, completion: nil)
                             }
@@ -130,7 +130,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                     }
                 } else {
                     performUIUpdatesOnMain {
-                        let locationErrorAlert = UIAlertController(title: "Geocoding Error", message: "Could not find location", preferredStyle: UIAlertControllerStyle.Alert)
+                        let locationErrorAlert = UIAlertController(title: "Geocoding Error", message: "\(error?.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
                         locationErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(locationErrorAlert, animated: true, completion: nil)
                     }

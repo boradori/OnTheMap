@@ -93,10 +93,17 @@ extension Client {
                     completionHandlerForQueryingStudentLocation(duplicated: false, error: NSError(domain: "results", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse query results"]))
                     return
                 }
+
+                // Find a result that has uniqueKey of userID
+                for result in results {
+                    if result["uniqueKey"] as! String == userID {
+                        // Set client's objectID eqaul to the first result's objectID
+                        // This objectID is used to updateStudentLocation
+                        Client.sharedInstance().objectID = results.first![JSONResponseKeys.objectID] as? String
+                    }
+                }
                 
-                Client.sharedInstance().objectID = results.first![JSONResponseKeys.objectID] as? String
                 completionHandlerForQueryingStudentLocation(duplicated: true, error: nil)
-                
             }
         }
         
