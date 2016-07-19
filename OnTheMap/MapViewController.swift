@@ -24,7 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func loadStudentInformation() {
-        Client.sharedInstance().getStudentLocations("100", skip: "10") { (success, results, error) in
+        Client.sharedInstance().getStudentLocations("100") { (success, results, error) in
             if success {
                 
                 // Create an MKPointAnnocation for each dictionary in studentLocation.

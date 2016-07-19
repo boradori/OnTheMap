@@ -23,7 +23,6 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     var newStudentLocation: Bool!
     
     var locationString: String!
-    var userURL: String!
     var userLocation: CLLocationCoordinate2D!
     
     
@@ -82,38 +81,50 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         } else if findOnMapButton.currentTitle == "Submit" {
             // Send location and URL through submit using parse post method
             
-            userURL = mediaURLTextView.text
-            
-            var newStudentInformation = [String:AnyObject]()
-            newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
-            newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
-            newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
-            newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
-            newStudentInformation[Client.JSONBodyKeys.mediaURL] = userURL
-            newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
-            newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
-            
-            let studentInfo = StudentInformation(dictionary: newStudentInformation)
-            
-            Client.sharedInstance().addStudentLocation(studentInfo, completionHandlerForAddingStudentLocation: { (success, objectID, error) in
-                if success {
-                    Client.sharedInstance().objectID = objectID
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                } else {
-                    print(error)
-                }
+            if Client.sharedInstance().objectID == nil {
+                var newStudentInformation = [String:AnyObject]()
+                newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
+                newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
+                newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
+                newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
+                newStudentInformation[Client.JSONBodyKeys.mediaURL] = mediaURLTextView.text
+                newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
+                newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
                 
+                let studentInfo = StudentInformation(dictionary: newStudentInformation)
                 
-            })
+                Client.sharedInstance().addStudentLocation(studentInfo, completionHandlerForAddingStudentLocation: { (success, objectID, error) in
+                    if success {
+                        Client.sharedInstance().objectID = objectID
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    } else {
+                        print(error)
+                    }
+                })
+            } else {
+                var newStudentInformation = [String:AnyObject]()
+                newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
+                newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
+                newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
+                newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
+                newStudentInformation[Client.JSONBodyKeys.mediaURL] = mediaURLTextView.text
+                newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
+                newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
+                
+                let studentInfo = StudentInformation(dictionary: newStudentInformation)
+                
+                Client.sharedInstance().updateStudentLocation(Client.sharedInstance().objectID, studentInformation: studentInfo, completionHandlerForupdatingStudentLocation: { (success, error) in
+                    if success {
+                        print("update successful")
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    } else {
+                        print(error)
+                    }
+                })
+            }
             
-//            Client.sharedInstance().updateStudentLocation(Client.sharedInstance().objectID, studentInformation: studentInfo, completionHandlerForupdatingStudentLocation: { (success, error) in
-//                if success {
-//                    print("update successful")
-//                    self.dismissViewControllerAnimated(true, completion: nil)
-//                } else {
-//                    print(error)
-//                }
-//            })
+            
+            
             
         } else {
             performUIUpdatesOnMain {

@@ -82,8 +82,7 @@ extension Client {
     
     func addStudentLocation(studentInformation: StudentInformation, completionHandlerForAddingStudentLocation: (success: Bool, objectID: String?, error: NSError?) -> Void) {
         
-        let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}"
-
+        let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey!)\", \"firstName\": \"\(studentInformation.firstName!)\", \"lastName\": \"\(studentInformation.lastName!)\",\"mapString\": \"\(studentInformation.mapString!)\", \"mediaURL\": \"\(studentInformation.mediaURL!)\",\"latitude\": \(studentInformation.latitude!), \"longitude\": \(studentInformation.longitude!)}"
         
         let method = Methods.StudentLocation
         let parameters = [String:AnyObject]()
@@ -104,7 +103,7 @@ extension Client {
     
     func updateStudentLocation(objectID: String, studentInformation: StudentInformation, completionHandlerForupdatingStudentLocation: (success: Bool, error: NSError?) -> Void) {
         
-        let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey)\", \"firstName\": \"\(studentInformation.firstName)\", \"lastName\": \"\(studentInformation.lastName)\",\"mapString\": \"\(studentInformation.mapString)\", \"mediaURL\": \"\(studentInformation.mediaURL)\",\"latitude\": \(studentInformation.latitude), \"longitude\": \(studentInformation.longitude)}"
+        let jsonBody = "{\"uniqueKey\": \"\(studentInformation.uniqueKey!)\", \"firstName\": \"\(studentInformation.firstName!)\", \"lastName\": \"\(studentInformation.lastName!)\",\"mapString\": \"\(studentInformation.mapString!)\", \"mediaURL\": \"\(studentInformation.mediaURL!)\",\"latitude\": \(studentInformation.latitude!), \"longitude\": \(studentInformation.longitude!)}"
         
         let method = Methods.StudentLocation + "/" + objectID
         let parameters = [String:AnyObject]()
@@ -122,10 +121,10 @@ extension Client {
     
     
     
-    func getStudentLocations(limit: String, skip: String, completionHandlerForGettingStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
+    func getStudentLocations(limit: String, completionHandlerForGettingStudentLocations: (success: Bool, results: [[String:AnyObject]]!, error: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
-        let parameters = [Client.ParameterKeys.Limit: limit, Client.ParameterKeys.Skip: skip, Client.ParameterKeys.Order: "-updatedAt"]
+        let parameters = [Client.ParameterKeys.Limit: limit, Client.ParameterKeys.Order: "-updatedAt"]
         
         print(parameters)
         

@@ -21,7 +21,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
 
     func loadStudentInformation() {
-        Client.sharedInstance().getStudentLocations("100", skip: "10") { (success, results, error) in
+        Client.sharedInstance().getStudentLocations("100") { (success, results, error) in
             if success {
                 StudentInformationModel.sharedInstance().studentInformationArray.removeAll()
                 
