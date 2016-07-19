@@ -79,7 +79,20 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func refresh(sender: AnyObject) {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        self.view.addSubview(activityIndicator)
+        
+        func stopAnimatingActivityIndicator() {
+            performUIUpdatesOnMain {
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
+            }
+        }
+        
         loadStudentInformation()
+        stopAnimatingActivityIndicator()
     }
     
     @IBAction func logout(sender: AnyObject) {
