@@ -95,19 +95,14 @@ extension Client {
                     return
                 }
 
-                var currentUserResults = [AnyObject]()
                 // Find a result that has uniqueKey of userID
                 for result in results {
                     if result["uniqueKey"] as! String == userID {
-                        // Append the results with uniqueKey of userID to currentUserResults array
-                        currentUserResults.append(result)
+                        // Set client's objectID eqaul to the first result's objectID
+                        // This objectID is used to updateStudentLocation
+                        Client.sharedInstance().objectID = result[JSONResponseKeys.objectID] as? String
                     }
                 }
-                
-                print(currentUserResults)
-                // Set client's objectID eqaul to the first result's objectID
-                // This objectID is used to updateStudentLocation
-                Client.sharedInstance().objectID = currentUserResults.first![JSONResponseKeys.objectID] as? String
                 
                 completionHandlerForQueryingStudentLocation(duplicated: true, error: nil)
             }
