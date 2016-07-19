@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -173,11 +174,18 @@
                                 <action selector="logout:" destination="erz-Wy-pYX" id="Gz5-TV-obO"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="pin" id="Drc-sk-5zq">
-                            <connections>
-                                <segue destination="uvL-aH-hKp" kind="presentation" id="UrH-C9-oeT"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="hFm-gr-9G5">
+                                <connections>
+                                    <action selector="refresh:" destination="erz-Wy-pYX" id="91A-1V-MPy"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="pin" id="Drc-sk-5zq">
+                                <connections>
+                                    <segue destination="uvL-aH-hKp" kind="presentation" id="UrH-C9-oeT"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="nnH-Gn-nqe" id="22G-Lu-f0b"/>
@@ -251,11 +259,18 @@
                                 <action selector="logout:" destination="jeV-uO-7FO" id="t5J-bR-xxX"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="pin" id="DvK-C2-PDj">
-                            <connections>
-                                <segue destination="uvL-aH-hKp" kind="presentation" id="aZx-dR-xzO"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="bZX-nO-XzE">
+                                <connections>
+                                    <action selector="refresh:" destination="jeV-uO-7FO" id="zf4-Zt-H6M"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="pin" id="DvK-C2-PDj">
+                                <connections>
+                                    <segue destination="uvL-aH-hKp" kind="presentation" id="aZx-dR-xzO"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="BOS-00-BuN" id="s13-hm-1zd"/>

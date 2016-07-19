@@ -48,9 +48,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error, badCredentials) in
             performUIUpdatesOnMain {
                 if success {
-                    
-                    
-                    
                     Client.sharedInstance().sessionID = sessionID
                     Client.sharedInstance().userID = userID
                     
@@ -98,7 +95,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
         }
     }
-    
     
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

@@ -78,6 +78,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    @IBAction func refresh(sender: AnyObject) {
+        loadStudentInformation()
+    }
+    
     @IBAction func logout(sender: AnyObject) {
         Client.sharedInstance().logoutFromUdacity { (success, results, error) in
             if success {
