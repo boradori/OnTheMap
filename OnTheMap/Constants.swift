@@ -30,6 +30,7 @@ extension Client {
         static let Skip = "skip"
         static let Order = "order"
         
+        static let uniqueKey = "uniqueKey"
     }
     
     // MARK: Methods
@@ -69,6 +70,8 @@ extension Client {
         static let firstName = "first_name"
         static let lastName = "last_name"
         static let objectID = "objectId"
+        
+        static let updatedAt = "updatedAt"
         
     }
     

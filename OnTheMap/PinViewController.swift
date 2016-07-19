@@ -62,6 +62,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
             
             locationString = locationTextView.text
             
+            // Find location using CLGeocoder
             findLocation(locationString, completionHandlerForLocation: { (coordinate) in
                 guard let location = coordinate else {
                     print("There is an error with your request: findLocation")
@@ -72,6 +73,8 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                 
                 self.bottomView.alpha = 0.5
                 self.findOnMapButton.setTitle("Submit", forState: .Normal)
+                
+                // Display the location on map
                 self.displayLocation(location)
                 
                 // let user enter URL
@@ -81,59 +84,59 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         } else if findOnMapButton.currentTitle == "Submit" {
             // Send location and URL through submit using parse post method
             
-            if Client.sharedInstance().objectID == nil {
-                var newStudentInformation = [String:AnyObject]()
-                newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
-                newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
-                newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
-                newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
-                newStudentInformation[Client.JSONBodyKeys.mediaURL] = mediaURLTextView.text
-                newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
-                newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
-                
-                let studentInfo = StudentInformation(dictionary: newStudentInformation)
-                
-                Client.sharedInstance().addStudentLocation(studentInfo, completionHandlerForAddingStudentLocation: { (success, objectID, error) in
-                    if success {
-                        Client.sharedInstance().objectID = objectID
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    } else {
-                        print(error)
+            var newStudentInformation = [String:AnyObject]()
+            newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
+            newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
+            newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
+            newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
+            newStudentInformation[Client.JSONBodyKeys.mediaURL] = mediaURLTextView.text
+            newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
+            newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
+            
+            let studentInfo = StudentInformation(dictionary: newStudentInformation)
+            
+            Client.sharedInstance().queryStudentLocation(Client.sharedInstance().userID, completionHandlerForQueryingStudentLocation: { (duplicated, error) in
+                if duplicated {
+                    Client.sharedInstance().updateStudentLocation(Client.sharedInstance().objectID, studentInformation: studentInfo, completionHandlerForupdatingStudentLocation: { (success, updatedAt, error) in
+                        if success {
+                            print(updatedAt)
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        } else {
+                            performUIUpdatesOnMain {
+                                let updateStudentAlert = UIAlertController(title: "Updating Student Error", message: "\(error?.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                                updateStudentAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                self.presentViewController(updateStudentAlert, animated: true, completion: nil)
+                            }
+                        }
+                    })
+                } else if duplicated == false {
+                    Client.sharedInstance().addStudentLocation(studentInfo, completionHandlerForAddingStudentLocation: { (success, objectID, error) in
+                        if success {
+                            Client.sharedInstance().objectID = objectID
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        } else {
+                            performUIUpdatesOnMain {
+                                let addStudentAlert = UIAlertController(title: "Adding Student Error", message: "\(error?.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                                addStudentAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                self.presentViewController(addStudentAlert, animated: true, completion: nil)
+                            }
+                        }
+                    })
+                } else if reachabilityStatus == kNOTREACHABLE {
+                    performUIUpdatesOnMain {
+                        let noInternetAlert = UIAlertController(title: "No Internet Connectivity", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
+                        noInternetAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(noInternetAlert, animated: true, completion: nil)
                     }
-                })
-            } else {
-                var newStudentInformation = [String:AnyObject]()
-                newStudentInformation[Client.JSONBodyKeys.uniqueKey] = Client.sharedInstance().userID
-                newStudentInformation[Client.JSONBodyKeys.firstName] = Client.sharedInstance().firstName
-                newStudentInformation[Client.JSONBodyKeys.lastName] = Client.sharedInstance().lastName
-                newStudentInformation[Client.JSONBodyKeys.mapString] = locationString
-                newStudentInformation[Client.JSONBodyKeys.mediaURL] = mediaURLTextView.text
-                newStudentInformation[Client.JSONBodyKeys.latitude] = userLocation.latitude
-                newStudentInformation[Client.JSONBodyKeys.longitude] = userLocation.longitude
-                
-                let studentInfo = StudentInformation(dictionary: newStudentInformation)
-                
-                Client.sharedInstance().updateStudentLocation(Client.sharedInstance().objectID, studentInformation: studentInfo, completionHandlerForupdatingStudentLocation: { (success, error) in
-                    if success {
-                        print("update successful")
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    } else {
-                        print(error)
+                } else {
+                    performUIUpdatesOnMain {
+                        let locationErrorAlert = UIAlertController(title: "Geocoding Error", message: "Could not find location", preferredStyle: UIAlertControllerStyle.Alert)
+                        locationErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(locationErrorAlert, animated: true, completion: nil)
                     }
-                })
-            }
-            
-            
-            
-            
-        } else {
-            performUIUpdatesOnMain {
-                let locationErrorAlert = UIAlertController(title: "Geocoding Error", message: "Could not find location", preferredStyle: UIAlertControllerStyle.Alert)
-                locationErrorAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(locationErrorAlert, animated: true, completion: nil)
-            }
+                }
+            })
         }
-
     }
     
     func findLocation(location: String, completionHandlerForLocation: (coordinate: CLLocationCoordinate2D?) -> Void) {
@@ -173,9 +176,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         mapView.scrollEnabled = false
         
         midView.insertSubview(mapView, belowSubview: bottomView)
-        
-        
-        
+
         let lat = CLLocationDegrees(location.latitude)
         let long = CLLocationDegrees(location.longitude)
         
@@ -188,16 +189,9 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         
         mapView.addAnnotation(annotation)
         mapView.showAnnotations(annotations, animated: true)
-        
     }
-    
-    
     
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-    
-    
 }

@@ -101,6 +101,41 @@ class Client: NSObject {
         return task
     }
     
+    func taskForParseGetQueryMethod(method: String, parameters: [String:AnyObject], completionHandlerForGetQuery: (results: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))
+        request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request: PARSE GET METHOD")
+                completionHandlerForGetQuery(results: nil, error: error)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request")
+                return
+            }
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
+                completionHandlerForGetQuery(results: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            completionHandlerForGetQuery(results: parsedResult, error: nil)
+        }
+        
+        task.resume()
+        return task
+        
+    }
+    
     func taskForParsePutMethod(jsonBody: String, method: String, parameters: [String:AnyObject], completionHandlerForPut: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))

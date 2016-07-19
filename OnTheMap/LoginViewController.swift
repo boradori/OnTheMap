@@ -32,9 +32,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
+        
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        self.view.addSubview(activityIndicator)
+        
+        func stopAnimatingActivityIndicator() {
+            performUIUpdatesOnMain {
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
+            }
+        }
+        
         Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error, badCredentials) in
             performUIUpdatesOnMain {
                 if success {
+                    
+                    stopAnimatingActivityIndicator()
+                    
                     Client.sharedInstance().sessionID = sessionID
                     Client.sharedInstance().userID = userID
                     
@@ -52,12 +68,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     })
                     self.completeLogin()
                 } else if badCredentials != nil {
+                    stopAnimatingActivityIndicator()
                     performUIUpdatesOnMain {
                         let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
                         credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(credentialsAlert, animated: true, completion: nil)
                     }
                 } else if reachabilityStatus == kNOTREACHABLE { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
+                    stopAnimatingActivityIndicator()
                     performUIUpdatesOnMain {
                         let noInternetAlert = UIAlertController(title: "No Internet Connectivity", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
                         noInternetAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -73,6 +91,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
         presentViewController(controller, animated: true, completion: nil)
     }
+    
+    @IBAction func signUp(sender: AnyObject) {
+        performUIUpdatesOnMain {
+            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
+        }
+    }
+    
+    
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
