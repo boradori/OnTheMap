@@ -89,19 +89,25 @@ extension Client {
             if let error = error {
                 completionHandlerForQueryingStudentLocation(duplicated: false, error: error)
             } else {
+                print(results)
                 guard let results = results[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
                     completionHandlerForQueryingStudentLocation(duplicated: false, error: NSError(domain: "results", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse query results"]))
                     return
                 }
 
+                var currentUserResults = [AnyObject]()
                 // Find a result that has uniqueKey of userID
                 for result in results {
                     if result["uniqueKey"] as! String == userID {
-                        // Set client's objectID eqaul to the first result's objectID
-                        // This objectID is used to updateStudentLocation
-                        Client.sharedInstance().objectID = results.first![JSONResponseKeys.objectID] as? String
+                        // Append the results with uniqueKey of userID to currentUserResults array
+                        currentUserResults.append(result)
                     }
                 }
+                
+                print(currentUserResults)
+                // Set client's objectID eqaul to the first result's objectID
+                // This objectID is used to updateStudentLocation
+                Client.sharedInstance().objectID = currentUserResults.first![JSONResponseKeys.objectID] as? String
                 
                 completionHandlerForQueryingStudentLocation(duplicated: true, error: nil)
             }
