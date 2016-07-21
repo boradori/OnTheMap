@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var debugTextLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var session = NSURLSession.sharedSession()
     
@@ -26,29 +27,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailField.delegate = self
         passwordField.delegate = self
     }
-
-    override func viewDidAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
     @IBAction func loginPressed(sender: AnyObject) {
         
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        activityIndicator.center = self.view.center
-        activityIndicator.startAnimating()
-        self.view.addSubview(activityIndicator)
-        
-        func stopAnimatingActivityIndicator() {
-            performUIUpdatesOnMain {
-                activityIndicator.stopAnimating()
-                activityIndicator.removeFromSuperview()
-            }
-        }
+        self.showHideActivityIndicator(true)
         
         Client.sharedInstance().authenticateWithViewController(emailField.text!, password: passwordField.text!, hostViewController: self) { (success, sessionID, userID, error, badCredentials) in
             performUIUpdatesOnMain {
                 if success {
-                    stopAnimatingActivityIndicator()
+                    self.showHideActivityIndicator(false)
                     Client.sharedInstance().sessionID = sessionID
                     Client.sharedInstance().userID = userID
                     
@@ -57,29 +44,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             Client.sharedInstance().firstName = firstName
                             Client.sharedInstance().lastName = lastName
                         } else {
-                            performUIUpdatesOnMain {
-                                let noUserInfoAlert = UIAlertController(title: "Error", message: "Failed to get user information", preferredStyle: UIAlertControllerStyle.Alert)
-                                noUserInfoAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                                self.presentViewController(noUserInfoAlert, animated: true, completion: nil)
-                            }
+                            self.alertMessage("Parsing User Information Error", message: "Failed to get user information")
                         }
-                        
                     })
                     self.completeLogin()
+                    
                 } else if badCredentials != nil {
-                    stopAnimatingActivityIndicator()
-                    performUIUpdatesOnMain {
-                        let credentialsAlert = UIAlertController(title: "Credential Error", message: "\(badCredentials)", preferredStyle: UIAlertControllerStyle.Alert)
-                        credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(credentialsAlert, animated: true, completion: nil)
-                    }
+                    self.showHideActivityIndicator(false)
+                    self.alertMessage("Credential Error", message: "\(badCredentials)")
+                    
                 } else if reachabilityStatus == kNOTREACHABLE { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
-                    stopAnimatingActivityIndicator()
-                    performUIUpdatesOnMain {
-                        let noInternetAlert = UIAlertController(title: "No Internet Connectivity", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
-                        noInternetAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(noInternetAlert, animated: true, completion: nil)
-                    }
+                    self.showHideActivityIndicator(false)
+                    self.alertMessage("No Internet Connectivity", message: "Make sure your device is connected to the internet.")
                 }
             }
         }
@@ -96,6 +72,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func showHideActivityIndicator(show: Bool) {
+        if show {
+            performUIUpdatesOnMain {
+                self.activityIndicator.startAnimating()
+            }
+        } else {
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
+        }
+    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()

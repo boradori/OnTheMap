@@ -38,7 +38,8 @@ class Client: NSObject {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX!")
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForGet(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
             
@@ -72,14 +73,20 @@ class Client: NSObject {
         request.addValue(Constants.ContentType, forHTTPHeaderField: "Content-Type")
         
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
-
+        
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
                 print("There is an error with your request: PARSE POST METHOD")
                 completionHandlerForPost(result: nil, error: error)
                 return
             }
-
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForPost(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
+                return
+            }
+            
             guard let data = data else {
                 print("No data was returned with this request")
                 return
@@ -101,16 +108,25 @@ class Client: NSObject {
         return task
     }
     
-    func taskForParseGetQueryMethod(method: String, parameters: [String:AnyObject], completionHandlerForGetQuery: (results: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForParseGetQueryMethod(method: String, parameters: [String:AnyObject], completionHandlerForGetQuery: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: URLFromParameters("Parse", parameters: parameters, withPathExtension: method))
+        let urlString = "https://api.parse.com/1/classes/\(method)?where=%7B%22uniqueKey%22%3A%22\(userID)%22%7D"
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(URL: url!)
+        
         request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             guard (error == nil) else {
                 print("There is an error with your request: PARSE GET METHOD")
-                completionHandlerForGetQuery(results: nil, error: error)
+                completionHandlerForGetQuery(result: nil, error: error)
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForGetQuery(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
             
@@ -124,11 +140,11 @@ class Client: NSObject {
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
             } catch {
                 let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(data)'"]
-                completionHandlerForGetQuery(results: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                completionHandlerForGetQuery(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
                 return
             }
             
-            completionHandlerForGetQuery(results: parsedResult, error: nil)
+            completionHandlerForGetQuery(result: parsedResult, error: nil)
         }
         
         task.resume()
@@ -150,6 +166,12 @@ class Client: NSObject {
             guard (error == nil) else {
                 print("There is an error with your request: PARSE POST METHOD")
                 completionHandlerForPut(result: nil, error: error)
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForPut(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
             
@@ -185,6 +207,12 @@ class Client: NSObject {
                 return
             }
             
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForGet(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
+                return
+            }
+            
             guard let data = data else {
                 print("No data was returned with this request.")
                 return
@@ -201,7 +229,7 @@ class Client: NSObject {
                 completionHandlerForGet(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
                 return
             }
-
+            
             completionHandlerForGet(result: parsedResult, error: nil)
             
         }
@@ -223,6 +251,12 @@ class Client: NSObject {
             guard (error == nil) else {
                 print("There is an error with your request: UDACITY POST METHOD")
                 completionHandlerForPost(result: nil, badCredentials: nil, error: error)
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForPost(result: nil, badCredentials: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
             
@@ -273,13 +307,19 @@ class Client: NSObject {
                 return
             }
             
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                completionHandlerForDelete(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
+                return
+            }
+            
             guard let data = data else {
                 print("No data was returned with this request")
                 return
             }
             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
-//            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            //            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
             
             var parsedResult: AnyObject!
             do {

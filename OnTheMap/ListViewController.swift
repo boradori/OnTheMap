@@ -19,7 +19,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         loadStudentInformation()
     }
     
-
+    
     func loadStudentInformation() {
         Client.sharedInstance().getStudentLocations("100") { (success, results, error) in
             if success {
@@ -34,11 +34,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.tableView.reloadData()
                 }
             } else {
-                performUIUpdatesOnMain {
-                    let credentialsAlert = UIAlertController(title: "Cannot download due to bad connectivity", message: "\(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                    credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(credentialsAlert, animated: true, completion: nil)
-                }
+                self.alertMessage("Cannot download due to bad connectivity", message: "\(error!.localizedDescription)")
             }
         }
     }
@@ -68,11 +64,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if app.canOpenURL(url) {
                     app.openURL(url)
                 } else {
-                    performUIUpdatesOnMain {
-                        let invalidURLAlert = UIAlertController(title: "Error", message: "Invalid URL", preferredStyle: UIAlertControllerStyle.Alert)
-                        invalidURLAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(invalidURLAlert, animated: true, completion: nil)
-                    }
+                    alertMessage("Error", message: "Invalid URL")
                 }
             }
         }
@@ -102,11 +94,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             } else {
-                performUIUpdatesOnMain {
-                    let logoutAlert = UIAlertController(title: "Cannot logout", message: "\(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                    logoutAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(logoutAlert, animated: true, completion: nil)
-                }
+                self.alertMessage("Cannot logout", message: "\(error!.localizedDescription)")
             }
         }
     }

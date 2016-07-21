@@ -45,27 +45,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVC-T7-pol">
-                                <rect key="frame" x="20" y="289" width="179" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWt-e6-Dyh">
-                                <rect key="frame" x="231" y="285" width="55" height="30"/>
-                                <state key="normal" title="Sign Up">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="signUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gjJ-uB-xNl"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frr-pC-oQ6">
-                                <rect key="frame" x="174" y="393" width="253" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7J-h3-gzR">
                                 <rect key="frame" x="20" y="211" width="560" height="30"/>
                                 <color key="backgroundColor" red="0.1486686643" green="0.28849539819999998" blue="0.66490101440000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -74,6 +53,30 @@
                                 </state>
                                 <connections>
                                     <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PDd-cV-CM4"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVC-T7-pol">
+                                <rect key="frame" x="20" y="289" width="179" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frr-pC-oQ6">
+                                <rect key="frame" x="174" y="393" width="253" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="KTq-GL-EvG">
+                                <rect key="frame" x="282" y="280" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWt-e6-Dyh">
+                                <rect key="frame" x="219" y="284" width="55" height="30"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gjJ-uB-xNl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -89,20 +92,23 @@
                             <constraint firstAttribute="trailingMargin" secondItem="XMc-uH-SJ7" secondAttribute="trailing" id="MHx-KM-cRu"/>
                             <constraint firstItem="frr-pC-oQ6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="373" id="Q7A-Gk-OT9"/>
                             <constraint firstItem="frr-pC-oQ6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="154" id="YQD-ZB-mhC"/>
-                            <constraint firstItem="aWt-e6-Dyh" firstAttribute="top" secondItem="f7J-h3-gzR" secondAttribute="bottom" constant="44" id="ZEZ-GS-maH"/>
+                            <constraint firstItem="aWt-e6-Dyh" firstAttribute="top" secondItem="f7J-h3-gzR" secondAttribute="bottom" constant="43" id="ZEZ-GS-maH"/>
                             <constraint firstItem="Gkb-Ih-FKd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="cRQ-y3-4Md"/>
                             <constraint firstAttribute="leadingMargin" secondItem="XMc-uH-SJ7" secondAttribute="leading" id="eGs-Rb-fcb"/>
+                            <constraint firstItem="KTq-GL-EvG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ebb-Zu-0VH"/>
                             <constraint firstItem="XMc-uH-SJ7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="127" id="elW-8D-nAi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="frr-pC-oQ6" secondAttribute="bottom" constant="186" id="gnX-Aa-o3r"/>
                             <constraint firstItem="f7J-h3-gzR" firstAttribute="top" secondItem="SQk-wE-ivc" secondAttribute="bottom" constant="16" id="kDI-ie-ldL"/>
+                            <constraint firstItem="KTq-GL-EvG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-1.5" id="pP1-g7-VoV"/>
                             <constraint firstAttribute="leadingMargin" secondItem="sVC-T7-pol" secondAttribute="leading" id="rO4-hl-EcX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="f7J-h3-gzR" secondAttribute="trailing" id="u2G-5T-WJI"/>
                             <constraint firstItem="XMc-uH-SJ7" firstAttribute="centerX" secondItem="Gkb-Ih-FKd" secondAttribute="centerX" id="utd-y8-lQe"/>
-                            <constraint firstItem="aWt-e6-Dyh" firstAttribute="leading" secondItem="sVC-T7-pol" secondAttribute="trailing" constant="32" id="xf9-dM-Ilu"/>
+                            <constraint firstItem="aWt-e6-Dyh" firstAttribute="leading" secondItem="sVC-T7-pol" secondAttribute="trailing" constant="20" id="xf9-dM-Ilu"/>
                             <constraint firstItem="SQk-wE-ivc" firstAttribute="top" secondItem="XMc-uH-SJ7" secondAttribute="bottom" constant="8" id="yMw-1f-INg"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="KTq-GL-EvG" id="C8o-Ha-79E"/>
                         <outlet property="debugTextLabel" destination="frr-pC-oQ6" id="L8n-gF-TTF"/>
                         <outlet property="emailField" destination="XMc-uH-SJ7" id="mvl-QJ-fiI"/>
                         <outlet property="loginButton" destination="f7J-h3-gzR" id="Yj6-7Y-hen"/>
@@ -134,7 +140,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lhw-Gr-hGI" id="6a5-wd-syg">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="4HO-YI-uBC">
@@ -332,6 +338,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                                     </textView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RFC-zB-2An">
+                                        <rect key="frame" x="290" y="179" width="20" height="20"/>
+                                    </activityIndicatorView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imn-9R-FcR">
                                         <rect key="frame" x="0.0" y="383" width="600" height="89"/>
                                         <subviews>
@@ -357,11 +366,13 @@
                                 <constraints>
                                     <constraint firstItem="imn-9R-FcR" firstAttribute="top" secondItem="Zlx-JZ-5q5" secondAttribute="bottom" constant="-2" id="63f-Xq-PRQ"/>
                                     <constraint firstAttribute="trailing" secondItem="imn-9R-FcR" secondAttribute="trailing" id="7kg-5f-7xJ"/>
+                                    <constraint firstItem="RFC-zB-2An" firstAttribute="centerY" secondItem="Zlx-JZ-5q5" secondAttribute="centerY" id="C81-7B-PnX"/>
                                     <constraint firstItem="imn-9R-FcR" firstAttribute="leading" secondItem="Zlx-JZ-5q5" secondAttribute="leading" id="GGq-fb-GI0"/>
                                     <constraint firstItem="imn-9R-FcR" firstAttribute="trailing" secondItem="Zlx-JZ-5q5" secondAttribute="trailing" id="Jcy-aq-kCS"/>
                                     <constraint firstItem="Zlx-JZ-5q5" firstAttribute="top" secondItem="Uth-zJ-Xuo" secondAttribute="top" constant="-8" id="QTe-5M-gfi"/>
                                     <constraint firstAttribute="bottom" secondItem="Zlx-JZ-5q5" secondAttribute="bottom" constant="87" id="Sve-pO-aFt"/>
                                     <constraint firstAttribute="bottom" secondItem="imn-9R-FcR" secondAttribute="bottom" id="dJu-I6-R4a"/>
+                                    <constraint firstItem="RFC-zB-2An" firstAttribute="centerX" secondItem="Zlx-JZ-5q5" secondAttribute="centerX" id="hd8-O1-xk9"/>
                                     <constraint firstItem="imn-9R-FcR" firstAttribute="leading" secondItem="Uth-zJ-Xuo" secondAttribute="leading" id="yea-1j-fV1"/>
                                 </constraints>
                             </view>
@@ -385,6 +396,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="RFC-zB-2An" id="tVe-XK-cXt"/>
                         <outlet property="bottomView" destination="imn-9R-FcR" id="xzD-mt-gXN"/>
                         <outlet property="findOnMapButton" destination="NGt-8U-WMs" id="kaF-Fh-wHv"/>
                         <outlet property="locationTextView" destination="Zlx-JZ-5q5" id="RSg-4l-9wc"/>

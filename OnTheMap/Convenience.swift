@@ -82,27 +82,20 @@ extension Client {
     
     func queryStudentLocation(userID: String, completionHandlerForQueryingStudentLocation: (duplicated: Bool, error: NSError?) -> Void) {
         
-        let method = Methods.StudentLocation + "?where=%7B%22" + "\(Client.ParameterKeys.uniqueKey)" + "%22%3A%22" + "\(userID)" + "%22%7D"
+        let method = Methods.StudentLocation
         let parameters = [String:AnyObject]()
         
-        taskForParseGetQueryMethod(method, parameters: parameters) { (results, error) in
+        taskForParseGetQueryMethod(method, parameters: parameters) { (result, error) in
             if let error = error {
                 completionHandlerForQueryingStudentLocation(duplicated: false, error: error)
             } else {
-                print(results)
-                guard let results = results[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
+                
+                guard let result = result[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
                     completionHandlerForQueryingStudentLocation(duplicated: false, error: NSError(domain: "results", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse query results"]))
                     return
                 }
-
-                // Find a result that has uniqueKey of userID
-                for result in results {
-                    if result["uniqueKey"] as! String == userID {
-                        // Set client's objectID eqaul to the first result's objectID
-                        // This objectID is used to updateStudentLocation
-                        Client.sharedInstance().objectID = result[JSONResponseKeys.objectID] as? String
-                    }
-                }
+                
+                Client.sharedInstance().objectID = result.first![JSONResponseKeys.objectID] as? String
                 
                 completionHandlerForQueryingStudentLocation(duplicated: true, error: nil)
             }

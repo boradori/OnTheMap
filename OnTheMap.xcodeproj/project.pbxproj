@@ -13,6 +13,7 @@
 		0C1D981B1D175F1B002B682A /* StudentInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */; };
 		0C1D981D1D1A835F002B682A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D981C1D1A835F002B682A /* ListViewController.swift */; };
 		0C1E09E01D38BC6C0019E2EF /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E09DF1D38BC6C0019E2EF /* PinViewController.swift */; };
+		0C1E09E21D4084C30019E2EF /* AlertMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E09E11D4084C30019E2EF /* AlertMessages.swift */; };
 		0C46FA621D0959EB00BAEF9A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */; };
 		0C4B79D01D291646003733F8 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4B79CF1D291646003733F8 /* Reachability.framework */; };
 		0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */; };
@@ -32,6 +33,7 @@
 		0C1D981A1D175F1B002B682A /* StudentInformationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationModel.swift; sourceTree = "<group>"; };
 		0C1D981C1D1A835F002B682A /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		0C1E09DF1D38BC6C0019E2EF /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
+		0C1E09E11D4084C30019E2EF /* AlertMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessages.swift; sourceTree = "<group>"; };
 		0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		0C4B79CF1D291646003733F8 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		0C8AA0041D06A6430058B2F3 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,7 @@
 				0C8AA01C1D07F3770058B2F3 /* Model */,
 				0C8AA0191D06AC910058B2F3 /* Controller */,
 				0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */,
+				0C1E09E11D4084C30019E2EF /* AlertMessages.swift */,
 				0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */,
 				0C8AA00B1D06A6430058B2F3 /* Main.storyboard */,
 				0C8AA00E1D06A6430058B2F3 /* Assets.xcassets */,
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C19DA051D1A890400903381 /* StudentInfoTableCell.swift in Sources */,
+				0C1E09E21D4084C30019E2EF /* AlertMessages.swift in Sources */,
 				0C1D98191D14F8FF002B682A /* StudentInformation.swift in Sources */,
 				0C8AA0201D07F4020058B2F3 /* Constants.swift in Sources */,
 				0C8AA0221D07F4380058B2F3 /* Convenience.swift in Sources */,

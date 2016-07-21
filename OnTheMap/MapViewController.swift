@@ -61,13 +61,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
                 
             } else {
-                performUIUpdatesOnMain {
-                    let credentialsAlert = UIAlertController(title: "Cannot download due to bad connectivity", message: "\(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                    credentialsAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(credentialsAlert, animated: true, completion: nil)
-                }
+                self.alertMessage("Cannot download due to bad connectivity", message: "\(error!.localizedDescription)")
             }
-        }   
+        }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -98,11 +94,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     if app.canOpenURL(url) {
                         app.openURL(url)
                     } else {
-                        performUIUpdatesOnMain {
-                            let invalidURLAlert = UIAlertController(title: "Error", message: "Invalid URL", preferredStyle: UIAlertControllerStyle.Alert)
-                            invalidURLAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                            self.presentViewController(invalidURLAlert, animated: true, completion: nil)
-                        }
+                        self.alertMessage("Error", message: "Invalid URL")
                     }
                 }
             }
@@ -133,13 +125,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             } else {
-                performUIUpdatesOnMain {
-                    let logoutAlert = UIAlertController(title: "Cannot logout", message: "\(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                    logoutAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(logoutAlert, animated: true, completion: nil)
-                }
+                self.alertMessage("Cannot logout", message: "\(error!.localizedDescription)")
             }
         }
     }
-
+    
 }
