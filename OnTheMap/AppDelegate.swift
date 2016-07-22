@@ -9,12 +9,9 @@
 import UIKit
 import Reachability
 
-let kREACHABLEWITHWIFI = "ReachableWithWIFI"
-let kNOTREACHABLE = "NotReachable"
-let kREACHABLEWITHWWAN = "ReachableWithWWAN"
 
 var reachability: Reachability?
-var reachabilityStatus = kREACHABLEWITHWIFI
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,53 +22,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.reachabilityChanged(_:)),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability?.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
 
-        do {
-            internetReach = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            print("Error! No internet connection!")
-        }
-        
-        // startNotifier always listens to status change such as switching over from wifi to 3G
-        do {
-         try internetReach?.startNotifier()
-        } catch {
-            print("Notifier could not start")
-        }
-        
-        if internetReach != nil {
-            statusChangedWithReachability(internetReach!)
-        }
-        
         return true
     }
     
-    func reachabilityChanged(notification: NSNotification) {
-        print("Reachability status changed")
-        reachability = notification.object as? Reachability
-        statusChangedWithReachability(internetReach!)
-    }
-    
-    
-    func statusChangedWithReachability(currentReachabilityStatus: Reachability) {
+    func reachabilityChanged(note: NSNotification) {
         
-        let networkStatus: Reachability.NetworkStatus = currentReachabilityStatus.currentReachabilityStatus
+        let reachability = note.object as! Reachability
         
-        print("StatusValue: \(networkStatus.description)")
-        print("StatusValue: \(networkStatus.hashValue)")
-        
-        if networkStatus.hashValue == Reachability.NetworkStatus.NotReachable.hashValue {
+        if reachability.isReachable() {
+            if reachability.isReachableViaWiFi() {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
             print("Network not reachable")
-            reachabilityStatus = kNOTREACHABLE
-        } else if networkStatus.hashValue == Reachability.NetworkStatus.ReachableViaWiFi.hashValue {
-            print("Reachable via WIFI")
-            reachabilityStatus = kREACHABLEWITHWIFI
-        } else if networkStatus.hashValue == Reachability.NetworkStatus.ReachableViaWWAN.hashValue {
-            print("Reachable via WWAN")
-            reachabilityStatus = kREACHABLEWITHWWAN
         }
     }
+
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

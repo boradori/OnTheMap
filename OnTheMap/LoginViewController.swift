@@ -53,7 +53,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.showHideActivityIndicator(false)
                     self.alertMessage("Credential Error", message: "\(badCredentials)")
                     
-                } else if reachabilityStatus == kNOTREACHABLE { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
+                } else if !reachability!.isReachable() { // Reachability for no internet connection or I could just use error!.localizedDescription for the alert
                     self.showHideActivityIndicator(false)
                     self.alertMessage("No Internet Connectivity", message: "Make sure your device is connected to the internet.")
                 }

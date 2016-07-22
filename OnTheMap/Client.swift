@@ -82,7 +82,7 @@ class Client: NSObject {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                print("Your request returned a status other than 2XX! taskForParsePostMethod")
                 completionHandlerForPost(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
@@ -125,7 +125,7 @@ class Client: NSObject {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                print("Your request returned a status other than 2XX! taskForParseGetQueryMethod")
                 completionHandlerForGetQuery(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
@@ -170,7 +170,7 @@ class Client: NSObject {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                print("Your request returned a status other than 2XX! taskForParsePutMethod")
                 completionHandlerForPut(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
@@ -208,7 +208,7 @@ class Client: NSObject {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                print("Your request returned a status other than 2XX! taskForUdacityGetMethod")
                 completionHandlerForGet(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }
@@ -254,12 +254,6 @@ class Client: NSObject {
                 return
             }
             
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX! taskForParseGetMethod")
-                completionHandlerForPost(result: nil, badCredentials: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
-                return
-            }
-            
             guard let data = data else {
                 print("No data was returned with this request.")
                 return
@@ -278,7 +272,7 @@ class Client: NSObject {
             }
             
             let badCredentials: String? = parsedResult?.valueForKey("error") as? String
-            
+
             completionHandlerForPost(result: parsedResult, badCredentials: badCredentials, error: nil)
             
         }
@@ -308,7 +302,7 @@ class Client: NSObject {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                print("Your request returned a status other than 2XX! taskForParseGetMethod")
+                print("Your request returned a status other than 2XX! taskForUdacityDeleteMethod")
                 completionHandlerForDelete(result: nil, error: NSError(domain: "statusCode", code: 0, userInfo: [NSLocalizedDescriptionKey: "\((response as! NSHTTPURLResponse).statusCode)"]))
                 return
             }

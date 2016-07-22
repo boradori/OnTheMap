@@ -132,7 +132,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                             }
                             self.showHideActivityIndicator(false)
                         })
-                    } else if reachabilityStatus == kNOTREACHABLE {
+                    } else if !reachability!.isReachable() {
                         self.alertMessage("No Internet Connectivity", message: "Make sure your device is connected to the internet")
                         self.showHideActivityIndicator(false)
                     } else {
@@ -150,7 +150,7 @@ class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     func findLocation(location: String, completionHandlerForLocation: (coordinate: CLLocationCoordinate2D?) -> Void) {
         CLGeocoder().geocodeAddressString(location) { (placemark, error) in
             guard (error == nil) else {
-                if reachabilityStatus == kNOTREACHABLE {
+                if !reachability!.isReachable() {
                     self.alertMessage("No Internet Connectivity", message: "Make sure your device is connected to the internet")
                 } else if location == "Enter Your Location Here" {
                     self.alertMessage("You did not enter location", message: "Please enter valid location information")
