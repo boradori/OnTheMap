@@ -8,7 +8,7 @@
 
 import UIKit
 import Reachability
-
+import FBSDKCoreKit
 
 var reachability: Reachability?
 
@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // switch to the native Facebook app or Safari, such as Facebook Login or Facebook Dialogs
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
@@ -51,6 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Network not reachable")
         }
+    }
+    
+    // switch to the native Facebook app or Safari, such as Facebook Login or Facebook Dialogs
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
+        let handled: Bool = FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+        return handled
+        
     }
 
 

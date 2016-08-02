@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import FBSDKLoginKit
 
 class PinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     

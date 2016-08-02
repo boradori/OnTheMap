@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -88,6 +90,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func logout(sender: AnyObject) {
+        FBSDKLoginManager().logOut()
         Client.sharedInstance().logoutFromUdacity { (success, results, error) in
             if success {
                 performUIUpdatesOnMain {

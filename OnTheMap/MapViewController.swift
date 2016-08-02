@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
@@ -119,6 +121,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func logout(sender: AnyObject) {
+        FBSDKLoginManager().logOut()
         Client.sharedInstance().logoutFromUdacity { (success, results, error) in
             if success {
                 performUIUpdatesOnMain {

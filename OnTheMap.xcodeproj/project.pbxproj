@@ -15,7 +15,6 @@
 		0C1E09E01D38BC6C0019E2EF /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E09DF1D38BC6C0019E2EF /* PinViewController.swift */; };
 		0C1E09E21D4084C30019E2EF /* AlertMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E09E11D4084C30019E2EF /* AlertMessages.swift */; };
 		0C46FA621D0959EB00BAEF9A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */; };
-		0C4B79D01D291646003733F8 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4B79CF1D291646003733F8 /* Reachability.framework */; };
 		0C8AA0081D06A6430058B2F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */; };
 		0C8AA00A1D06A6430058B2F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0091D06A6430058B2F3 /* LoginViewController.swift */; };
 		0C8AA00D1D06A6430058B2F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C8AA00B1D06A6430058B2F3 /* Main.storyboard */; };
@@ -24,6 +23,10 @@
 		0C8AA01E1D07F3EF0058B2F3 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA01D1D07F3EF0058B2F3 /* Client.swift */; };
 		0C8AA0201D07F4020058B2F3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA01F1D07F4020058B2F3 /* Constants.swift */; };
 		0C8AA0221D07F4380058B2F3 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8AA0211D07F4380058B2F3 /* Convenience.swift */; };
+		0C9B09C41D50987C00F4034D /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9B09C31D50987C00F4034D /* Reachability.framework */; };
+		0C9B09C51D50988D00F4034D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC9E7561D5094CF00795617 /* FBSDKCoreKit.framework */; };
+		0C9B09C61D50988F00F4034D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC9E7581D5094D300795617 /* FBSDKLoginKit.framework */; };
+		0C9B09C71D50989100F4034D /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC9E75A1D5094D900795617 /* FBSDKShareKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +38,6 @@
 		0C1E09DF1D38BC6C0019E2EF /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		0C1E09E11D4084C30019E2EF /* AlertMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessages.swift; sourceTree = "<group>"; };
 		0C46FA611D0959EB00BAEF9A /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
-		0C4B79CF1D291646003733F8 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		0C8AA0041D06A6430058B2F3 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8AA0071D06A6430058B2F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C8AA0091D06A6430058B2F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +48,10 @@
 		0C8AA01D1D07F3EF0058B2F3 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		0C8AA01F1D07F4020058B2F3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0C8AA0211D07F4380058B2F3 /* Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
+		0C9B09C31D50987C00F4034D /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		0CC9E7561D5094CF00795617 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		0CC9E7581D5094D300795617 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		0CC9E75A1D5094D900795617 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +59,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C4B79D01D291646003733F8 /* Reachability.framework in Frameworks */,
+				0C9B09C41D50987C00F4034D /* Reachability.framework in Frameworks */,
+				0C9B09C51D50988D00F4034D /* FBSDKCoreKit.framework in Frameworks */,
+				0C9B09C61D50988F00F4034D /* FBSDKLoginKit.framework in Frameworks */,
+				0C9B09C71D50989100F4034D /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,7 +72,7 @@
 		0C8A9FFB1D06A6430058B2F3 = {
 			isa = PBXGroup;
 			children = (
-				0C4B79CF1D291646003733F8 /* Reachability.framework */,
+				0CC9E7551D5094C300795617 /* Frameworks */,
 				0C8AA0061D06A6430058B2F3 /* OnTheMap */,
 				0C8AA0051D06A6430058B2F3 /* Products */,
 			);
@@ -117,6 +126,17 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		0CC9E7551D5094C300795617 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0C9B09C31D50987C00F4034D /* Reachability.framework */,
+				0CC9E75A1D5094D900795617 /* FBSDKShareKit.framework */,
+				0CC9E7581D5094D300795617 /* FBSDKLoginKit.framework */,
+				0CC9E7561D5094CF00795617 /* FBSDKCoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -125,9 +145,9 @@
 			buildConfigurationList = 0C8AA0161D06A6430058B2F3 /* Build configuration list for PBXNativeTarget "OnTheMap" */;
 			buildPhases = (
 				0C8AA0001D06A6430058B2F3 /* Sources */,
-				0C8AA0011D06A6430058B2F3 /* Frameworks */,
 				0C8AA0021D06A6430058B2F3 /* Resources */,
-				0C4B79D11D29171D003733F8 /* ShellScript */,
+				0C8AA0011D06A6430058B2F3 /* Frameworks */,
+				0C4B79D11D29171D003733F8 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -186,7 +206,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C4B79D11D29171D003733F8 /* ShellScript */ = {
+		0C4B79D11D29171D003733F8 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -194,6 +214,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,11 +356,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"~/Documents/FacebookSDK",
 				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Youngsun.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -350,11 +373,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"~/Documents/FacebookSDK",
 				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Youngsun.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

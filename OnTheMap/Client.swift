@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FBSDKLoginKit
 
 class Client: NSObject {
     
@@ -325,6 +326,46 @@ class Client: NSObject {
             }
             print(parsedResult)
             completionHandlerForDelete(result: parsedResult, error: nil)
+            
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    func taskForFacebookPostMethod(parameters: [String:AnyObject], completionHandlerForPost: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        let request = NSMutableURLRequest(URL: URLFromParameters("Udacity", parameters: parameters, withPathExtension: Methods.Session))
+        
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(FBSDKAccessToken.currentAccessToken())\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            guard (error == nil) else {
+                print("There is an error with your request: UDACITY POST METHOD")
+                completionHandlerForPost(result: nil, error: error)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data was returned with this request.")
+                return
+            }
+            
+            /* 5. Parse the data */
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey: "Could not parse data: '\(newData)'"]
+                completionHandlerForPost(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            completionHandlerForPost(result: parsedResult, error: nil)
             
         }
         

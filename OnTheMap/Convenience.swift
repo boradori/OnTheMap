@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import MapKit
+import FBSDKLoginKit
 
 extension Client {
     
@@ -96,8 +97,8 @@ extension Client {
                 }
                 
                 Client.sharedInstance().objectID = result.first![JSONResponseKeys.objectID] as? String
-                
                 completionHandlerForQueryingStudentLocation(duplicated: true, error: nil)
+                
             }
         }
         
