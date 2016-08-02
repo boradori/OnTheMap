@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -88,9 +89,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     }
     
     @IBAction func signUp(sender: AnyObject) {
-        performUIUpdatesOnMain {
-            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
-        }
+//        performUIUpdatesOnMain {
+//            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
+//        }
+        showWebpage(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
+    }
+    
+    private func showWebpage(URL: NSURL) {
+        let vc = SFSafariViewController(URL: URL)
+        presentViewController(vc, animated: true, completion: nil)
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
