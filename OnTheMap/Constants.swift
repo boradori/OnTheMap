@@ -19,8 +19,8 @@ extension Client {
         static let ApiHostUdacity = "www.udacity.com"
         static let ApiPathUdacity = "/api"
         
-        static let ApiHostParse = "api.parse.com"
-        static let ApiPathParse = "/1/classes"
+        static let ApiHostParse = "parse.udacity.com"
+        static let ApiPathParse = "/parse/classes"
         
     }
     

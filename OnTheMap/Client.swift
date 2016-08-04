@@ -111,7 +111,8 @@ class Client: NSObject {
     
     func taskForParseGetQueryMethod(method: String, parameters: [String:AnyObject], completionHandlerForGetQuery: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let urlString = "https://api.parse.com/1/classes/\(method)?where=%7B%22uniqueKey%22%3A%22\(userID)%22%7D"
+        let urlString = "https://parse.udacity.com/parse/classes\(method)?where=%7B%22uniqueKey%22%3A%22\(userID)%22%7D"
+        
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
         
