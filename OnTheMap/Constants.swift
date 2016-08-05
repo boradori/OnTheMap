@@ -65,7 +65,7 @@ extension Client {
         static let Key = "key"
         
         static let Results = "results"
-        
+        static let uniqueKey = "uniqueKey"
         static let User = "user"
         static let firstName = "first_name"
         static let lastName = "last_name"

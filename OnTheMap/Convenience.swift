@@ -86,17 +86,25 @@ extension Client {
         let method = Methods.StudentLocation
         let parameters = [String:AnyObject]()
         
-        taskForParseGetQueryMethod(method, parameters: parameters) { (result, error) in
+        taskForParseGetQueryMethod(method, parameters: parameters) { (results, error) in
             if let error = error {
                 completionHandlerForQueryingStudentLocation(duplicated: false, error: error)
             } else {
-                
-                guard let result = result[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
+                print(results)
+                guard let results = results[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
                     completionHandlerForQueryingStudentLocation(duplicated: false, error: NSError(domain: "results", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse query results"]))
                     return
                 }
                 
-                Client.sharedInstance().objectID = result.first![JSONResponseKeys.objectID] as? String
+                for result in results {
+                    print(result)
+                    if result[JSONResponseKeys.uniqueKey] as! String == userID {
+                        Client.sharedInstance().objectID = result[JSONResponseKeys.objectID] as? String
+                        break
+                    }
+                }
+                
+//                Client.sharedInstance().objectID = results.first![JSONResponseKeys.objectID] as? String
                 completionHandlerForQueryingStudentLocation(duplicated: true, error: nil)
                 
             }
