@@ -50,7 +50,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCellWithIdentifier("studentInfoTableCell") as! StudentInfoTableCell
         let studentInfoCell = StudentInformationModel.sharedInstance().studentInformationArray[indexPath.row]
         
-        cell.studentName.text = "\(studentInfoCell.firstName!) \(studentInfoCell.lastName!)"
+        if let firstName = studentInfoCell.firstName, let lastName = studentInfoCell.lastName {
+            cell.studentName.text = "\(firstName) \(lastName)"
+        } else {
+            print("some data do not have firstName and lastName")
+        }
         
         return cell
         

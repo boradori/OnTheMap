@@ -90,7 +90,6 @@ extension Client {
             if let error = error {
                 completionHandlerForQueryingStudentLocation(duplicated: false, error: error)
             } else {
-                print(results)
                 guard let results = results[Client.JSONResponseKeys.Results] as? [[String:AnyObject]] else {
                     completionHandlerForQueryingStudentLocation(duplicated: false, error: NSError(domain: "results", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse query results"]))
                     return

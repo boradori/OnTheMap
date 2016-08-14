@@ -38,25 +38,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
                 
                 for studentLocation in results {
-                    //
-                    let lat = CLLocationDegrees(studentLocation[Client.JSONBodyKeys.latitude] as! Double)
-                    let long = CLLocationDegrees(studentLocation[Client.JSONBodyKeys.longitude] as! Double)
                     
-                    // The lat and long are used to create a CLLocationCoordinates2D instance.
-                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
                     
-                    let first = studentLocation[Client.JSONBodyKeys.firstName] as! String
-                    let last = studentLocation[Client.JSONBodyKeys.lastName] as! String
-                    let mediaURL = studentLocation[Client.JSONBodyKeys.mediaURL] as! String
-                    
-                    // Here we create the annotation and set its coordiate, title, and subtitle properties
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(first) \(last)"
-                    annotation.subtitle = mediaURL
-                    
-                    // Finally we place the annotation in an array of annotations.
-                    annotations.append(annotation)
+                    if let latitude = studentLocation[Client.JSONBodyKeys.latitude] as? Double, let longitude = studentLocation[Client.JSONBodyKeys.longitude] as? Double {
+                        
+                        let lat = CLLocationDegrees(latitude)
+                        let long = CLLocationDegrees(longitude)
+                        
+                        // The lat and long are used to create a CLLocationCoordinates2D instance.
+                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                        
+                        let first = studentLocation[Client.JSONBodyKeys.firstName] as! String
+                        let last = studentLocation[Client.JSONBodyKeys.lastName] as! String
+                        let mediaURL = studentLocation[Client.JSONBodyKeys.mediaURL] as! String
+                        
+                        // Here we create the annotation and set its coordiate, title, and subtitle properties
+                        let annotation = MKPointAnnotation()
+                        annotation.coordinate = coordinate
+                        annotation.title = "\(first) \(last)"
+                        annotation.subtitle = mediaURL
+                        
+                        // Finally we place the annotation in an array of annotations.
+                        annotations.append(annotation)
+                    } else {
+                        print("some data do not have latitude and longitude")
+                    }
                 }
                 performUIUpdatesOnMain {
                     self.mapView.addAnnotations(annotations)
