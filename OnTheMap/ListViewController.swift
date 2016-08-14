@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import SafariServices
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -68,12 +69,18 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let url = NSURL(string: toOpen) {
                 // check if your application can open the NSURL instance
                 if app.canOpenURL(url) {
-                    app.openURL(url)
+//                    app.openURL(url)
+                    showWebpage(url)
                 } else {
                     alertMessage("Error", message: "Invalid URL")
                 }
             }
         }
+    }
+    
+    private func showWebpage(URL: NSURL) {
+        let vc = SFSafariViewController(URL: URL)
+        presentViewController(vc, animated: true, completion: nil)
     }
     
     @IBAction func refresh(sender: AnyObject) {
