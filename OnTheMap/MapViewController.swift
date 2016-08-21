@@ -11,6 +11,7 @@ import MapKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 import SafariServices
+import XCGLogger
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
@@ -39,7 +40,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
                 
                 for studentLocation in results {
-                    
                     
                     if let latitude = studentLocation[Client.JSONBodyKeys.latitude] as? Double, let longitude = studentLocation[Client.JSONBodyKeys.longitude] as? Double {
                         

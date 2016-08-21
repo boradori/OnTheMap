@@ -10,6 +10,7 @@ import UIKit
 import SafariServices
 import FBSDKCoreKit
 import FBSDKLoginKit
+import XCGLogger
 
 class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
     
@@ -69,6 +70,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
                             self.alertMessage("Parsing User Information Error", message: "Failed to get user information")
                         }
                     })
+                    log.debug("login button pressed")
                     self.completeLogin()
                     
                 } else if badCredentials != nil {
